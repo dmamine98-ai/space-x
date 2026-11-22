@@ -9,7 +9,7 @@
       --bg: #050811;
       --panel: #0b101d;
       --panel-2: #101729;
-      --line: rgba(56, 189, 248, 0.22);
+      --line: rgba(56, 189, 248, 0.24);
       --gold: #eab308;
       --gold-b: #fde047;
       --green: #10b981;
@@ -23,8 +23,8 @@
 
     body {
       background:
-        radial-gradient(circle at 50% 35%, rgba(34, 211, 238, 0.08), transparent 45%),
-        radial-gradient(circle at 15% 10%, rgba(234, 179, 8, 0.07), transparent 35%),
+        radial-gradient(circle at 50% 35%, rgba(34, 211, 238, 0.1), transparent 45%),
+        radial-gradient(circle at 15% 10%, rgba(234, 179, 8, 0.08), transparent 35%),
         var(--bg);
       color: var(--text);
       padding: 10px;
@@ -34,7 +34,6 @@
 
     .term { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
 
-    /* شريط علوي حي */
     .top-bar {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -56,10 +55,10 @@
       border-radius: 6px;
       font-size: 13px;
     }
-    .brand-title { font-weight: 800; color: var(--cyan); letter-spacing: 0.6px; font-size: 13.5px; }
+    .brand-title { font-weight: 800; color: var(--cyan); letter-spacing: 0.5px; font-size: 13px; }
     .live-pill {
-      background: rgba(239, 68, 68, 0.16);
-      border: 1px solid rgba(239, 68, 68, 0.5);
+      background: rgba(239, 68, 68, 0.18);
+      border: 1px solid rgba(239, 68, 68, 0.55);
       color: #fca5a5;
       padding: 2px 7px;
       border-radius: 4px;
@@ -96,10 +95,9 @@
     .view { display: none; }
     .view.active { display: flex; flex-direction: column; gap: 10px; }
 
-    /* شبكة الترمينال الرئيسية */
     .hud-grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 10px;
     }
 
@@ -123,7 +121,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
       padding-bottom: 6px;
       margin-bottom: 8px;
       font-size: 11px;
@@ -144,11 +142,10 @@
     }
     .mini-bars span {
       flex: 1;
-      background: linear-gradient(to top, rgba(16,185,129,0.25), var(--green));
+      background: linear-gradient(to top, rgba(16,185,129,0.28), var(--green));
       border-radius: 2px 2px 0 0;
     }
 
-    /* القائمة اليسرى واليمنى حول الشبكة الكروية */
     .metric-row {
       padding: 7px 8px;
       border-radius: 7px;
@@ -186,23 +183,36 @@
     .signal-card.watch .score-pill { background: rgba(234, 179, 8, 0.16); color: var(--gold-b); }
 
     .canvas-wrap {
-      display: grid;
-      place-items: center;
-      position: relative;
-      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.06), rgba(5, 8, 17, 0.95) 75%);
     }
-    canvas { width: 100%; max-width: 460px; height: auto; display: block; }
+    canvas#neuralSphere {
+      width: 100%;
+      max-width: 380px;
+      height: 310px;
+      display: block;
+      cursor: pointer;
+    }
+    canvas#volChart {
+      width: 100%;
+      height: 120px;
+      display: block;
+    }
 
     .log-feed {
       font-size: 11px;
-      max-height: 130px;
+      max-height: 135px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
     .log-line {
-      padding: 4px 7px;
+      padding: 5px 8px;
       background: var(--panel-2);
       border-radius: 5px;
       display: flex;
@@ -228,9 +238,9 @@
       color: var(--text);
       border: 1px solid var(--line);
       border-radius: 7px;
-      padding: 6px 11px;
+      padding: 5px 10px;
       font-weight: 700;
-      font-size: 11.5px;
+      font-size: 11px;
       cursor: pointer;
     }
 
@@ -261,7 +271,6 @@
 </head>
 <body>
   <div class="term">
-    <!-- الشريط العلوي -->
     <div class="top-bar">
       <div class="brand-box" id="brandTrigger" title="Space X">
         <span class="brand-badge">SX</span>
@@ -269,7 +278,7 @@
         <span class="live-pill">● LIVE MATRIX</span>
       </div>
       <div class="stream-line" id="topStream">
-        [AI-CORE] +2.84% ▲ | [SOFT-X] +1.42% ▲ | [DATA-IDX] -0.95% ▼ | [AUTO-NET] -1.18% ▼ | WEEKLY PROFIT: $120
+        [AI-CORE] +2.84% ▲ | [NV-QUANT] +3.12% ▲ | [SOFT-X] +1.42% ▲ | [DATA-IDX] -1.35% ▼ | [MKT-VOL] -2.18% ▼
       </div>
       <div class="nav-row">
         <button class="nav-btn active" data-v="terminal" onclick="openV('terminal', this)">⚡ الرادار العصبي</button>
@@ -278,7 +287,6 @@
       </div>
     </div>
 
-    <!-- لوحة الإدارة المخفية (بكلمة سر SpaceX@2026) -->
     <div class="box admin-box" id="adminPanel">
       <div class="box-head">
         <span>🔐 لوحة الإدارة الخاصة — SPACE X</span>
@@ -301,7 +309,6 @@
       <button class="btn-gold" onclick="saveAdmin()">تحديث مؤشرات المنصة</button>
     </div>
 
-    <!-- الواجهة الرئيسية: رادار الذكاء الاصطناعي والأسواق -->
     <div class="view active" id="v-terminal">
       <div class="hud-grid-3">
         <div class="box">
@@ -319,9 +326,9 @@
             <span>مؤشر نبض السوق والأسهم</span>
             <button class="btn-dark" onclick="tickMarket()">نبض لحظي</button>
           </div>
-          <div class="big-num" id="pulseVal">+1.84%</div>
-          <div style="color:var(--muted); font-size:11px;" id="pulseSub">تدفق سيولة نشط عبر عقد الذكاء الاصطناعي</div>
-          <div style="margin-top:8px; display:flex; gap:8px; font-size:11px;">
+          <div class="big-num" id="pulseVal">+0.90%</div>
+          <div style="color:var(--muted); font-size:11px;">تدفق سيولة نشط عبر عقد الذكاء الاصطناعي والأسواق</div>
+          <div style="margin-top:8px; display:flex; gap:10px; font-size:11px;">
             <span class="up" id="bullCount">صاعد: 3</span>
             <span class="dn" id="bearCount">هابط: 2</span>
           </div>
@@ -332,12 +339,11 @@
             <span>حالة الشبكة والبيانات</span>
             <span style="color:var(--gold-b)">AI-V4</span>
           </div>
-          <div style="font-size:12px; margin-bottom:4px;">العقدة النشطة: <strong style="color:var(--cyan)" id="activeNodeLabel">AI-CORE • أمريكا الشمالية</strong></div>
-          <div style="font-size:11px; color:var(--muted);" id="activeNodeDetail">اضغط على الكرة العصبية لتبديل العقدة وقراءة إشارتها.</div>
+          <div style="font-size:12px; margin-bottom:4px;">العقدة النشطة: <strong style="color:var(--cyan)" id="activeNodeLabel">AI-CORE • مؤشر الذكاء والأتمتة</strong></div>
+          <div style="font-size:11px; color:var(--muted);" id="activeNodeDetail">السعر: <strong>1842.50</strong> | التغير: <span class="up">▲ +2.84%</span> | قوة الإشارة: <strong>94/100</strong></div>
         </div>
       </div>
 
-      <!-- المرحلة الوسطى: مؤشرات يسار + كرة شبكية متشعبة + إشارات يمين -->
       <div class="neural-stage">
         <div class="box">
           <div class="box-head"><span>مؤشرات التدفق</span><span>FLOW</span></div>
@@ -360,7 +366,8 @@
         </div>
 
         <div class="box canvas-wrap">
-          <canvas id="neuralSphere" width="460" height="360"></canvas>
+          <canvas id="neuralSphere" width="380" height="310"></canvas>
+          <div style="font-size:10.5px; color:var(--muted); margin-top:4px;">اضغط على الكرة العصبية لتبديل العقدة وقراءة المؤشر</div>
         </div>
 
         <div class="box">
@@ -369,7 +376,6 @@
         </div>
       </div>
 
-      <!-- الجزء السفلي: مخطط أعمدة + سجل تداول وأحداث -->
       <div class="hud-grid-3">
         <div class="box">
           <div class="box-head"><span>مخطط الحجم والنشاط</span><span>VOLUME</span></div>
@@ -383,7 +389,6 @@
       </div>
     </div>
 
-    <!-- واجهة باقات الدينار الجزائري -->
     <div class="view" id="v-offers">
       <div class="box">
         <div class="box-head"><span>💎 عروض وباقات SPACE X (DA)</span><span>CALC</span></div>
@@ -395,7 +400,6 @@
       </div>
     </div>
 
-    <!-- واجهة مختبر الذكاء الاصطناعي -->
     <div class="view" id="v-lab">
       <div class="box">
         <div class="box-head"><span>🤖 مساعد SPACE X الذكي</span><span>AI LAB</span></div>
@@ -421,4 +425,285 @@
       { sym: "MKT-VOL", name: "مؤشر التذبذب والمخاطر", price: 312.4, chg: -2.18, type: "sell", score: 29, lat: 0.15, lon: -0.35 }
     ];
 
-    const
+    const pkgs = [
+      { cap: 3000, days: 7, daily: 900, total: 6300 },
+      { cap: 5000, days: 7, daily: 1500, total: 10500 },
+      { cap: 7000, days: 7, daily: 2000, total: 14000 },
+      { cap: 10000, days: 7, daily: 2900, total: 20300 },
+      { cap: 20000, days: 7, daily: 5800, total: 40600 },
+      { cap: 40000, days: 8, daily: 12000, total: 96000 }
+    ];
+
+    function openV(name, el) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      const target = document.getElementById("v-" + name);
+      if (target) target.classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      if (el) el.classList.add("active");
+    }
+
+    const brandTrigger = document.getElementById("brandTrigger");
+    if (brandTrigger) {
+      brandTrigger.addEventListener("click", () => {
+        taps++;
+        if (taps >= 5) {
+          taps = 0;
+          if (adminOpen) {
+            document.getElementById("adminPanel").classList.add("open");
+            return;
+          }
+          const pass = window.prompt("أدخل كلمة سر الإدارة الخاصة:");
+          if (pass === ADMIN_SECRET) {
+            adminOpen = true;
+            document.getElementById("adminPanel").classList.add("open");
+          } else if (pass !== null) {
+            alert("كلمة السر غير صحيحة.");
+          }
+        }
+      });
+    }
+
+    function closeAdmin() {
+      document.getElementById("adminPanel").classList.remove("open");
+    }
+
+    function saveAdmin() {
+      if (!adminOpen) return;
+      const p = Number(document.getElementById("inProfit").value || 0);
+      const a = Number(document.getElementById("inAuto").value || 0);
+      const s = Number(document.getElementById("inSoft").value || 0);
+      document.getElementById("statProfit").textContent = "$" + p;
+      document.getElementById("statAuto").textContent = a;
+      document.getElementById("statSoft").textContent = s;
+      closeAdmin();
+      pushLog("ADMIN", "تم تحديث أرقام المنصة ($" + p + " / أتمتة: " + a + " / برمجيات: " + s + ")", true);
+    }
+
+    function pushLog(tag, text, up) {
+      const log = document.getElementById("tapeLog");
+      if (!log) return;
+      const row = document.createElement("div");
+      row.className = "log-line";
+      const t = new Date().toLocaleTimeString("en-GB", { hour12: false });
+      row.innerHTML = `<span><strong style="color:var(--cyan)">[${t}]</strong> ${tag}: ${text}</span><span class="${up ? "up" : "dn"}">${up ? "▲" : "▼"}</span>`;
+      log.prepend(row);
+      if (log.children.length > 18) log.lastElementChild.remove();
+    }
+
+    function renderSignalsAndStream() {
+      const list = document.getElementById("signalsList");
+      if (!list) return;
+      list.innerHTML = "";
+      let upCnt = 0, dnCnt = 0, sumChg = 0;
+      const parts = [];
+
+      assets.forEach(a => {
+        const isUp = a.chg >= 0;
+        if (isUp) upCnt++; else dnCnt++;
+        sumChg += a.chg;
+        parts.push(`[${a.sym}] ${isUp ? "+" : ""}${a.chg.toFixed(2)}% ${isUp ? "▲" : "▼"}`);
+
+        const cls = a.type === "sell" ? "sell" : (a.type === "watch" ? "watch" : "");
+        const div = document.createElement("div");
+        div.className = "signal-card " + cls;
+        div.innerHTML = `
+          <div>
+            <div style="font-weight:800; font-size:11.5px;">${a.sym} <span style="color:var(--muted); font-weight:400;">${a.price.toFixed(2)}</span></div>
+            <div class="${isUp ? "up" : "dn"}" style="font-size:10.5px;">${isUp ? "▲ +" : "▼ "}${a.chg.toFixed(2)}% • ${a.name}</div>
+          </div>
+          <span class="score-pill">${a.score}</span>
+        `;
+        list.appendChild(div);
+      });
+
+      const avg = (sumChg / assets.length).toFixed(2);
+      const pv = document.getElementById("pulseVal");
+      if (pv) {
+        pv.textContent = (avg >= 0 ? "+" : "") + avg + "%";
+        pv.className = "big-num " + (avg >= 0 ? "up" : "dn");
+      }
+      const bc = document.getElementById("bullCount");
+      const src = document.getElementById("bearCount");
+      const ts = document.getElementById("topStream");
+      if (bc) bc.textContent = "صاعد: " + upCnt;
+      if (src) src.textContent = "هابط: " + dnCnt;
+      if (ts) ts.textContent = parts.join(" | ") + " | SPACE X LIVE";
+    }
+
+    function tickMarket() {
+      assets.forEach(a => {
+        const d = (Math.random() - 0.48) * 2.2;
+        a.chg = Number(d.toFixed(2));
+        a.price = Math.max(20, Number((a.price * (1 + d / 100)).toFixed(2)));
+        a.score = Math.max(12, Math.min(99, Math.round(a.score + d * 4)));
+        a.type = a.chg > 0.6 ? "buy" : (a.chg < -0.6 ? "sell" : "watch");
+      });
+      renderSignalsAndStream();
+      drawVolChart();
+      const pick = assets[Math.floor(Math.random() * assets.length)];
+      pushLog(pick.sym, `${pick.name} عند ${pick.price.toFixed(2)} (${pick.chg >= 0 ? "+" : ""}${pick.chg}%)`, pick.chg >= 0);
+    }
+
+    const nCan = document.getElementById("neuralSphere");
+    const nCtx = nCan && nCan.getContext ? nCan.getContext("2d") : null;
+    let angle = 0;
+
+    function drawNeuralSphere() {
+      if (!nCtx || !nCan) return;
+      const w = nCan.width, h = nCan.height;
+      const cx = w / 2, cy = h / 2, r = 92;
+      nCtx.clearRect(0, 0, w, h);
+
+      // حلقات مدارية حول النواة
+      nCtx.strokeStyle = "rgba(34, 211, 238, 0.22)";
+      nCtx.lineWidth = 1;
+      nCtx.beginPath();
+      nCtx.arc(cx, cy, r + 24, 0, Math.PI * 2);
+      nCtx.stroke();
+
+      const rays = 110;
+      for (let i = 0; i < rays; i++) {
+        const theta = (i / rays) * Math.PI * 2 + angle * 0.65;
+        const phi = Math.sin(i * 1.9 + angle) * 0.92;
+        const x1 = cx + Math.cos(theta) * Math.cos(phi) * r * 0.55;
+        const y1 = cy + Math.sin(phi) * r * 0.55;
+        const len = r + 14 + Math.sin(i * 2.7 + angle * 2) * 32;
+        const x2 = cx + Math.cos(theta) * Math.cos(phi) * len;
+        const y2 = cy + Math.sin(phi) * len;
+
+        const isGreen = i % 3 !== 0;
+        nCtx.strokeStyle = isGreen ? "rgba(16, 185, 129, 0.34)" : "rgba(239, 68, 68, 0.32)";
+        nCtx.lineWidth = 1.15;
+        nCtx.beginPath();
+        nCtx.moveTo(x1, y1);
+        nCtx.lineTo(x2, y2);
+        nCtx.stroke();
+
+        nCtx.fillStyle = i % 6 === 0 ? "#fde047" : (isGreen ? "#10b981" : "#ef4444");
+        nCtx.beginPath();
+        nCtx.arc(x2, y2, 2.4, 0, Math.PI * 2);
+        nCtx.fill();
+      }
+
+      const grad = nCtx.createRadialGradient(cx - 18, cy - 18, 6, cx, cy, r);
+      grad.addColorStop(0, "rgba(34, 211, 238, 0.32)");
+      grad.addColorStop(0.7, "rgba(16, 23, 41, 0.88)");
+      grad.addColorStop(1, "rgba(5, 8, 17, 0.98)");
+      nCtx.fillStyle = grad;
+      nCtx.beginPath();
+      nCtx.arc(cx, cy, r * 0.78, 0, Math.PI * 2);
+      nCtx.fill();
+
+      nCtx.strokeStyle = "rgba(253, 224, 71, 0.5)";
+      nCtx.lineWidth = 1.5;
+      nCtx.stroke();
+
+      const pts = assets.map((a, idx) => {
+        const lon = a.lon + angle;
+        const x = cx + Math.cos(lon) * r * 0.65;
+        const y = cy + Math.sin(a.lat + idx * 0.45) * r * 0.58;
+        return { a, x, y };
+      });
+
+      pts.forEach((p, i) => {
+        if (i > 0) {
+          nCtx.strokeStyle = p.a.chg >= 0 ? "rgba(16, 185, 129, 0.65)" : "rgba(239, 68, 68, 0.65)";
+          nCtx.lineWidth = 1.8;
+          nCtx.beginPath();
+          nCtx.moveTo(pts[i - 1].x, pts[i - 1].y);
+          nCtx.lineTo(p.x, p.y);
+          nCtx.stroke();
+        }
+        nCtx.fillStyle = p.a.chg >= 0 ? "#10b981" : "#ef4444";
+        nCtx.beginPath();
+        nCtx.arc(p.x, p.y, 5.5, 0, Math.PI * 2);
+        nCtx.fill();
+      });
+
+      angle += 0.014;
+      requestAnimationFrame(drawNeuralSphere);
+    }
+
+    if (nCan) {
+      nCan.addEventListener("click", () => {
+        const pick = assets[Math.floor(Math.random() * assets.length)];
+        const up = pick.chg >= 0;
+        document.getElementById("activeNodeLabel").textContent = `${pick.sym} • ${pick.name}`;
+        document.getElementById("activeNodeDetail").innerHTML =
+          `السعر: <strong>${pick.price.toFixed(2)}</strong> | التغير: <span class="${up ? "up" : "dn"}">${up ? "▲ +" : "▼ "}${pick.chg.toFixed(2)}%</span> | قوة الإشارة: <strong>${pick.score}/100</strong>`;
+      });
+    }
+
+    function drawVolChart() {
+      const vCan = document.getElementById("volChart");
+      if (!vCan || !vCan.getContext) return;
+      const vCtx = vCan.getContext("2d");
+      vCtx.clearRect(0, 0, vCan.width, vCan.height);
+      const bars = 20;
+      const bw = (vCan.width - 16) / bars;
+      for (let i = 0; i < bars; i++) {
+        const h1 = 18 + ((i * 19 + Math.floor(Math.random() * 25)) % 48);
+        const h2 = 10 + ((i * 13 + Math.floor(Math.random() * 18)) % 24);
+        const x = 8 + i * bw;
+        const baseY = vCan.height - 10;
+        vCtx.fillStyle = "#10b981";
+        vCtx.fillRect(x, baseY - h1, Math.max(4, bw - 4), h1);
+        vCtx.fillStyle = "#ef4444";
+        vCtx.fillRect(x, baseY - h1 - h2, Math.max(4, bw - 4), h2);
+      }
+    }
+
+    function buildSparkBars() {
+      const el = document.getElementById("sparkBars");
+      if (!el) return;
+      el.innerHTML = "";
+      [35, 50, 42, 68, 55, 80, 72, 92, 78, 96].forEach(h => {
+        const s = document.createElement("span");
+        s.style.height = h + "%";
+        el.appendChild(s);
+      });
+    }
+
+    function buildPkgs() {
+      const g = document.getElementById("pkgGrid");
+      if (!g) return;
+      g.innerHTML = "";
+      pkgs.forEach((p, idx) => {
+        const d = document.createElement("div");
+        d.className = "pkg" + (idx === 0 ? " active" : "");
+        d.innerHTML = `<div style="color:var(--gold-b); font-weight:900; font-size:15px;">${p.cap.toLocaleString()} DA</div>
+          <div style="color:var(--muted); font-size:11px; margin-top:4px;">${p.days} أيام • يومي تقديري: ${p.daily.toLocaleString()} DA</div>
+          <div style="margin-top:4px; font-weight:700;">إجمالي تقديري: ${p.total.toLocaleString()} DA</div>`;
+        d.onclick = () => {
+          document.querySelectorAll(".pkg").forEach(x => x.classList.remove("active"));
+          d.classList.add("active");
+          document.getElementById("pkgSummary").textContent =
+            `الباقة: ${p.cap.toLocaleString()} DA | المدة: ${p.days} أيام | اليومي التقديري: ${p.daily.toLocaleString()} DA | الإجمالي التقديري: ${p.total.toLocaleString()} DA`;
+        };
+        g.appendChild(d);
+      });
+      document.getElementById("pkgSummary").textContent =
+        "الباقة: 3,000 DA | المدة: 7 أيام | اليومي التقديري: 900 DA | الإجمالي التقديري: 6,300 DA";
+    }
+
+    function runAiLab() {
+      const q = document.getElementById("aiPrompt").value.trim();
+      const out = document.getElementById("aiReply");
+      if (!q) {
+        out.textContent = "اكتب سؤالاً أو كلمة مفتاحية أولاً.";
+        return;
+      }
+      out.textContent = `[SPACE X AI] تحليل حول "${q}": المنظومة تربط بين أدوات الأتمتة، البرمجيات التطبيقية، وقراءة المؤشرات اللحظية ضمن واجهة واحدة شفافة وسريعة.`;
+    }
+
+    renderSignalsAndStream();
+    drawNeuralSphere();
+    drawVolChart();
+    buildSparkBars();
+    buildPkgs();
+    pushLog("AI-CORE", "مؤشر الذكاء والأتمتة نشط عند 1842.50 (+2.84%)", true);
+    pushLog("DATA-IDX", "رصد تذبذب لحظي في مؤشر البيانات عند 518.90 (-1.35%)", false);
+    pushLog("SYSTEM", "تم تشغيل الرادار العصبي والشبكة الكروية لـ Space X بنجاح", true);
+  </script>
+</body>
+</html>
