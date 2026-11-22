@@ -3,812 +3,422 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Space X — منصة الذكاء الاصطناعي والأسواق التفاعلية</title>
+  <title>Space X // AI & Market Neural Terminal</title>
   <style>
     :root {
-      --bg: #080a0f;
-      --surface: rgba(18, 22, 34, 0.88);
-      --surface-2: rgba(27, 33, 50, 0.92);
-      --gold: #e0b341;
-      --gold-bright: #f7dc84;
-      --gold-dim: rgba(224, 179, 65, 0.16);
-      --text: #f6f8fc;
-      --muted: #9da7b8;
-      --border: rgba(224, 179, 65, 0.25);
-      --accent: #38bdf8;
-      --green: #22c55e;
+      --bg: #050811;
+      --panel: #0b101d;
+      --panel-2: #101729;
+      --line: rgba(56, 189, 248, 0.22);
+      --gold: #eab308;
+      --gold-b: #fde047;
+      --green: #10b981;
       --red: #ef4444;
+      --cyan: #22d3ee;
+      --text: #eef4ff;
+      --muted: #8b9bb4;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Segoe UI", system-ui, sans-serif; }
 
     body {
       background:
-        radial-gradient(circle at 15% 10%, rgba(224, 179, 65, 0.12), transparent 35%),
-        radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.08), transparent 35%),
+        radial-gradient(circle at 50% 35%, rgba(34, 211, 238, 0.08), transparent 45%),
+        radial-gradient(circle at 15% 10%, rgba(234, 179, 8, 0.07), transparent 35%),
         var(--bg);
       color: var(--text);
-      line-height: 1.65;
-      padding: 16px;
-      min-height: 100vh;
-    }
-
-    .app { max-width: 1040px; margin: 0 auto; }
-
-    header {
-      background: var(--surface);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
-    }
-
-    .header-top {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .brand { display: flex; align-items: center; gap: 12px; }
-
-    .brand-icon {
-      width: 50px; height: 50px; border-radius: 15px;
-      background: linear-gradient(135deg, var(--gold-bright), #b78618);
-      color: #080a0f; display: grid; place-items: center;
-      font-size: 25px; font-weight: 900;
-      box-shadow: 0 6px 20px rgba(224, 179, 65, 0.28);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .brand h1 { font-size: 22px; color: var(--gold-bright); letter-spacing: 0.4px; }
-    .brand p { font-size: 12.5px; color: var(--muted); }
-
-    button {
-      border: none; border-radius: 11px; padding: 9px 14px;
-      font-weight: 700; font-size: 13px; cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.2s ease, background 0.2s ease;
-    }
-    button:active { transform: scale(0.97); }
-
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
-      color: #080a0f;
-    }
-    .btn-ghost {
-      background: var(--surface-2); color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost.active-tab {
-      background: var(--gold-dim);
-      border-color: var(--gold);
-      color: var(--gold-bright);
-    }
-
-    .tabs {
-      display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;
-      scrollbar-width: thin;
-    }
-    .tab-btn { white-space: nowrap; }
-
-    .view { display: none; animation: fadeIn 0.25s ease; }
-    .view.active { display: block; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-
-    .card-title {
-      font-size: 17px; color: var(--gold-bright);
-      margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
-    }
-
-    /* الكرة الأرضية والمؤشرات */
-    .globe-layout {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 16px;
-      align-items: center;
-    }
-
-    .globe-wrap {
-      position: relative;
-      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.12), rgba(8, 10, 15, 0.96) 72%);
-      border: 1px solid rgba(56, 189, 248, 0.24);
-      border-radius: 18px;
       padding: 10px;
-      display: grid;
-      place-items: center;
-    }
-
-    canvas#aiGlobe {
-      width: 100%;
-      max-width: 340px;
-      height: auto;
-      aspect-ratio: 1 / 1;
-      display: block;
-      cursor: pointer;
-    }
-
-    .globe-hud {
-      margin-top: 8px;
-      width: 100%;
-      background: #0b0e16;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
+      min-height: 100vh;
       font-size: 12.5px;
     }
 
-    .ticker-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    .term { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+    /* شريط علوي حي */
+    .top-bar {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      margin-bottom: 12px;
     }
 
-    .tick-item {
-      background: var(--surface-2);
+    .brand-box { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+    .brand-badge {
+      background: linear-gradient(135deg, var(--gold-b), var(--gold));
+      color: #050811;
+      font-weight: 900;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .brand-title { font-weight: 800; color: var(--cyan); letter-spacing: 0.6px; font-size: 13.5px; }
+    .live-pill {
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+
+    .stream-line {
+      color: var(--muted);
+      font-size: 11px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 560px;
+    }
+
+    .nav-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nav-btn {
+      background: var(--panel-2);
+      color: var(--muted);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 13px;
-      padding: 11px 12px;
+      padding: 6px 11px;
+      border-radius: 7px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .nav-btn.active {
+      color: var(--gold-b);
+      border-color: var(--gold);
+      background: rgba(234, 179, 8, 0.12);
     }
 
-    .tick-sym { font-size: 12px; color: var(--muted); font-weight: 700; }
-    .tick-price { font-size: 17px; font-weight: 900; margin: 2px 0; color: var(--text); }
-    .tick-up { color: var(--green); font-size: 12px; font-weight: 700; }
-    .tick-down { color: var(--red); font-size: 12px; font-weight: 700; }
+    .view { display: none; }
+    .view.active { display: flex; flex-direction: column; gap: 10px; }
 
-    .kpis {
+    /* شبكة الترمينال الرئيسية */
+    .hud-grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px; margin-bottom: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 10px;
     }
 
-    .kpi {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px; padding: 16px;
+    .neural-stage {
+      display: grid;
+      grid-template-columns: 240px 1fr 270px;
+      gap: 10px;
     }
-    .kpi .label { font-size: 12.5px; color: var(--muted); }
-    .kpi .val { font-size: 28px; font-weight: 900; color: var(--gold-bright); margin: 4px 0; }
-    .kpi .tag { font-size: 12px; color: var(--green); }
-
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-
-    .bar-item { margin-bottom: 12px; }
-    .bar-head { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
-    .bar-track { height: 10px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; }
-    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); border-radius: 99px; transition: width 0.4s ease; }
-
-    .chat-box {
-      background: #0b0e16; border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; padding: 12px; max-height: 220px; overflow-y: auto;
-      margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;
-    }
-    .msg { padding: 9px 12px; border-radius: 12px; font-size: 13px; max-width: 85%; }
-    .msg.bot { background: var(--surface-2); border: 1px solid var(--border); align-self: flex-start; }
-    .msg.user { background: var(--gold-dim); border: 1px solid var(--gold); align-self: flex-end; color: var(--gold-bright); }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-    .chip {
-      font-size: 11.5px; padding: 5px 10px; border-radius: 99px;
-      background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); cursor: pointer;
-    }
-    .chip:hover { color: var(--gold-bright); border-color: var(--gold); }
-
-    input, select, textarea {
-      width: 100%; padding: 10px 12px; border-radius: 10px;
-      border: 1px solid var(--border); background: #0b0e16;
-      color: var(--text); font-size: 13.5px; margin-bottom: 10px;
+    @media (max-width: 960px) {
+      .neural-stage { grid-template-columns: 1fr; }
     }
 
-    .output-box {
-      background: #0b0e16; border: 1px dashed var(--border);
-      border-radius: 12px; padding: 12px; font-size: 13px; color: #e5e9f0; min-height: 76px;
-      white-space: pre-line;
+    .box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
     }
 
-    .packages-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 14px;
-    }
-    .pkg {
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: 15px; padding: 14px; cursor: pointer; transition: border-color 0.2s, transform 0.15s;
-    }
-    .pkg:hover { transform: translateY(-2px); }
-    .pkg.selected { border-color: var(--gold-bright); box-shadow: 0 0 0 1px var(--gold-bright); }
-    .pkg-amount { font-size: 20px; font-weight: 800; color: var(--gold-bright); }
-    .pkg-meta { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
-
-    .proof-item {
-      background: var(--surface-2); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px; padding: 13px; margin-bottom: 10px;
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
-    }
-    .badge {
-      font-size: 11px; padding: 4px 9px; border-radius: 99px;
-      background: var(--gold-dim); color: var(--gold-bright); font-weight: 700;
+    .box-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--cyan);
+      text-transform: uppercase;
     }
 
-    .admin-box { display: none; border-color: var(--accent); }
+    .big-num { font-size: 24px; font-weight: 900; color: var(--green); }
+    .gold-num { font-size: 22px; font-weight: 900; color: var(--gold-b); }
+
+    .mini-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 34px;
+      margin-top: 6px;
+    }
+    .mini-bars span {
+      flex: 1;
+      background: linear-gradient(to top, rgba(16,185,129,0.25), var(--green));
+      border-radius: 2px 2px 0 0;
+    }
+
+    /* القائمة اليسرى واليمنى حول الشبكة الكروية */
+    .metric-row {
+      padding: 7px 8px;
+      border-radius: 7px;
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 6px;
+    }
+    .metric-top { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; }
+    .bar-bg { height: 5px; background: rgba(255,255,255,0.08); border-radius: 99px; margin-top: 5px; overflow: hidden; }
+    .bar-fg { height: 100%; border-radius: 99px; }
+
+    .signal-card {
+      padding: 7px 9px;
+      border-radius: 7px;
+      background: var(--panel-2);
+      border-right: 3px solid var(--green);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .signal-card.sell { border-right-color: var(--red); }
+    .signal-card.watch { border-right-color: var(--gold); }
+
+    .score-pill {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 900;
+      font-size: 11px;
+      background: rgba(16, 185, 129, 0.16);
+      color: var(--green);
+    }
+    .signal-card.sell .score-pill { background: rgba(239, 68, 68, 0.16); color: #f87171; }
+    .signal-card.watch .score-pill { background: rgba(234, 179, 8, 0.16); color: var(--gold-b); }
+
+    .canvas-wrap {
+      display: grid;
+      place-items: center;
+      position: relative;
+      min-height: 340px;
+    }
+    canvas { width: 100%; max-width: 460px; height: auto; display: block; }
+
+    .log-feed {
+      font-size: 11px;
+      max-height: 130px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .log-line {
+      padding: 4px 7px;
+      background: var(--panel-2);
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .up { color: var(--green); font-weight: 800; }
+    .dn { color: var(--red); font-weight: 800; }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-b), var(--gold));
+      color: #050811;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 11px;
+      font-weight: 800;
+      font-size: 11.5px;
+      cursor: pointer;
+    }
+    .btn-dark {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 6px 11px;
+      font-weight: 700;
+      font-size: 11.5px;
+      cursor: pointer;
+    }
+
+    input, select {
+      width: 100%;
+      background: #060913;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .admin-box { display: none; border-color: var(--gold); }
     .admin-box.open { display: block; }
 
-    .disclaimer {
-      font-size: 12px; color: var(--muted);
-      background: rgba(255,255,255,0.03); border-radius: 12px; padding: 12px;
+    .pkg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin-bottom: 10px; }
+    .pkg {
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 9px;
+      padding: 10px;
+      cursor: pointer;
     }
-
-    footer { text-align: center; color: var(--muted); font-size: 12px; padding: 16px 0 6px; }
+    .pkg.active { border-color: var(--gold-b); background: rgba(234, 179, 8, 0.08); }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="header-top">
-        <div class="brand">
-          <div class="brand-icon" id="logoTrigger" title="Space X">🚀</div>
-          <div>
-            <h1>Space X</h1>
-            <p>منصة الذكاء الاصطناعي، الأتمتة والأسواق التفاعلية</p>
-          </div>
-        </div>
+  <div class="term">
+    <!-- الشريط العلوي -->
+    <div class="top-bar">
+      <div class="brand-box" id="brandTrigger" title="Space X">
+        <span class="brand-badge">SX</span>
+        <span class="brand-title">SPACE X // NEURAL & MARKET ENGINE</span>
+        <span class="live-pill">● LIVE MATRIX</span>
       </div>
+      <div class="stream-line" id="topStream">
+        [AI-CORE] +2.84% ▲ | [SOFT-X] +1.42% ▲ | [DATA-IDX] -0.95% ▼ | [AUTO-NET] -1.18% ▼ | WEEKLY PROFIT: $120
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn active" data-v="terminal" onclick="openV('terminal', this)">⚡ الرادار العصبي</button>
+        <button class="nav-btn" data-v="offers" onclick="openV('offers', this)">💎 باقات DA</button>
+        <button class="nav-btn" data-v="lab" onclick="openV('lab', this)">🤖 مختبر AI</button>
+      </div>
+    </div>
 
-      <nav class="tabs" aria-label="أقسام المنصة">
-        <button class="btn-ghost tab-btn active-tab" data-tab="overview" onclick="switchTab('overview', this)">📊 نظرة عامة</button>
-        <button class="btn-ghost tab-btn" data-tab="lab" onclick="switchTab('lab', this)">🤖 مختبر أدوات AI</button>
-        <button class="btn-ghost tab-btn" data-tab="offers" onclick="switchTab('offers', this)">💎 العروض والحاسبة</button>
-        <button class="btn-ghost tab-btn" data-tab="proofs" onclick="switchTab('proofs', this)">✅ سجل الإثباتات</button>
-      </nav>
-    </header>
-
-    <!-- لوحة الإدارة الخاصة بك فقط (محمية بكلمة سر) -->
-    <section id="adminBox" class="card admin-box">
-      <div class="card-title">🔐 لوحة الإدارة الخاصة (Space X)</div>
-      <div class="grid-2">
+    <!-- لوحة الإدارة المخفية (بكلمة سر SpaceX@2026) -->
+    <div class="box admin-box" id="adminPanel">
+      <div class="box-head">
+        <span>🔐 لوحة الإدارة الخاصة — SPACE X</span>
+        <button class="btn-dark" onclick="closeAdmin()">إغلاق</button>
+      </div>
+      <div class="hud-grid-3">
         <div>
           <label>أرباح هذا الأسبوع ($)</label>
-          <input type="number" id="admProfit" value="120" />
+          <input type="number" id="inProfit" value="120" />
         </div>
         <div>
-          <label>مجلات / حزم الأتمتة المباعة</label>
-          <input type="number" id="admAuto" value="56" />
+          <label>مجلات الأتمتة المباعة</label>
+          <input type="number" id="inAuto" value="56" />
         </div>
         <div>
           <label>البرمجيات المباعة</label>
-          <input type="number" id="admSoft" value="44" />
-        </div>
-        <div>
-          <label>تاريخ التحديث</label>
-          <input type="text" id="admDate" value="23/11/2026" />
+          <input type="number" id="inSoft" value="44" />
         </div>
       </div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn-gold" onclick="applyAdminStats()">حفظ وتحديث الأرقام</button>
-        <button class="btn-ghost" onclick="lockAdmin()">إغلاق لوحة الإدارة</button>
-      </div>
-    </section>
+      <button class="btn-gold" onclick="saveAdmin()">تحديث مؤشرات المنصة</button>
+    </div>
 
-    <!-- تبويب 1: نظرة عامة -->
-    <section id="view-overview" class="view active">
-      <!-- الكرة الأرضية الذكية + مؤشرات الأسواق -->
-      <div class="card">
-        <div class="card-title">
-          <span>🌐 شبكة الذكاء الاصطناعي العالمية ومؤشرات الأسواق</span>
-          <button class="btn-ghost" onclick="pulseMarkets()">🔄 نبض السوق الآن</button>
-        </div>
-
-        <div class="globe-layout">
-          <div class="globe-wrap">
-            <canvas id="aiGlobe" width="340" height="340" aria-label="كرة أرضية تفاعلية للذكاء الاصطناعي والأسواق"></canvas>
-            <div class="globe-hud" id="globeSelectedInfo">
-              اضغط على الكرة الأرضية أو اختر عقدة لمعاينة إشارة الذكاء الاصطناعي وحركة المؤشر.
-            </div>
+    <!-- الواجهة الرئيسية: رادار الذكاء الاصطناعي والأسواق -->
+    <div class="view active" id="v-terminal">
+      <div class="hud-grid-3">
+        <div class="box">
+          <div class="box-head">
+            <span>أرباح الأسبوع الموثقة</span>
+            <span class="up">▲ ACTIVE</span>
           </div>
+          <div class="gold-num" id="statProfit">$120</div>
+          <div style="color:var(--muted); font-size:11px;">أتمتة: <strong id="statAuto" style="color:var(--cyan)">56</strong> • برمجيات: <strong id="statSoft" style="color:var(--gold-b)">44</strong></div>
+          <div class="mini-bars" id="sparkBars"></div>
+        </div>
 
-          <div>
-            <div class="ticker-grid" id="tickerGrid"></div>
-            <div class="disclaimer">
-              <strong>ملاحظة:</strong> مؤشرات الأسعار والنبضات الخضراء/الحمراء في هذا العرض محاكاة تفاعلية توضيحية لبيئة الذكاء الاصطناعي والأسواق، وليست توصية مالية أو استثمارية.
-            </div>
+        <div class="box">
+          <div class="box-head">
+            <span>مؤشر نبض السوق والأسهم</span>
+            <button class="btn-dark" onclick="tickMarket()">نبض لحظي</button>
+          </div>
+          <div class="big-num" id="pulseVal">+1.84%</div>
+          <div style="color:var(--muted); font-size:11px;" id="pulseSub">تدفق سيولة نشط عبر عقد الذكاء الاصطناعي</div>
+          <div style="margin-top:8px; display:flex; gap:8px; font-size:11px;">
+            <span class="up" id="bullCount">صاعد: 3</span>
+            <span class="dn" id="bearCount">هابط: 2</span>
           </div>
         </div>
-      </div>
 
-      <div class="kpis">
-        <div class="kpi">
-          <div class="label">أرباح هذا الأسبوع</div>
-          <div class="val" id="kpiProfit">$120</div>
-          <div class="tag">● نشط وموثّق — آخر تحديث: <span id="kpiDate">23/11/2026</span></div>
-        </div>
-        <div class="kpi">
-          <div class="label">مجلات الأتمتة المباعة</div>
-          <div class="val" id="kpiAuto">56</div>
-          <div class="tag">أدلة وأنظمة أتمتة ذكية</div>
-        </div>
-        <div class="kpi">
-          <div class="label">البرمجيات المباعة</div>
-          <div class="val" id="kpiSoft">44</div>
-          <div class="tag">تطبيقات وأدوات عملية</div>
+        <div class="box">
+          <div class="box-head">
+            <span>حالة الشبكة والبيانات</span>
+            <span style="color:var(--gold-b)">AI-V4</span>
+          </div>
+          <div style="font-size:12px; margin-bottom:4px;">العقدة النشطة: <strong style="color:var(--cyan)" id="activeNodeLabel">AI-CORE • أمريكا الشمالية</strong></div>
+          <div style="font-size:11px; color:var(--muted);" id="activeNodeDetail">اضغط على الكرة العصبية لتبديل العقدة وقراءة إشارتها.</div>
         </div>
       </div>
 
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title">📈 توزيع النشاط عبر المجالات</div>
-          <div class="bar-item">
-            <div class="bar-head"><span>أدوات الأتمتة وخدمة العملاء</span><span id="p1">42%</span></div>
-            <div class="bar-track"><div class="bar-fill" id="b1" style="width:42%"></div></div>
+      <!-- المرحلة الوسطى: مؤشرات يسار + كرة شبكية متشعبة + إشارات يمين -->
+      <div class="neural-stage">
+        <div class="box">
+          <div class="box-head"><span>مؤشرات التدفق</span><span>FLOW</span></div>
+          <div class="metric-row">
+            <div class="metric-top"><span>أتمتة العملاء</span><span class="up">86%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:86%; background:var(--green)"></div></div>
           </div>
-          <div class="bar-item">
-            <div class="bar-head"><span>الحوسبة والبرمجيات التطبيقية</span><span id="p2">32%</span></div>
-            <div class="bar-track"><div class="bar-fill" id="b2" style="width:32%"></div></div>
+          <div class="metric-row">
+            <div class="metric-top"><span>البرمجيات الجاهزة</span><span style="color:var(--gold-b)">74%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:74%; background:var(--gold-b)"></div></div>
           </div>
-          <div class="bar-item">
-            <div class="bar-head"><span>صناعة المحتوى والتصميم الرقمي</span><span id="p3">16%</span></div>
-            <div class="bar-track"><div class="bar-fill" id="b3" style="width:16%"></div></div>
+          <div class="metric-row">
+            <div class="metric-top"><span>تقلب السوق اللحظي</span><span class="dn">62%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:62%; background:var(--red)"></div></div>
           </div>
-          <div class="bar-item">
-            <div class="bar-head"><span>تحليل البيانات والتنبؤ</span><span id="p4">10%</span></div>
-            <div class="bar-track"><div class="bar-fill" id="b4" style="width:10%"></div></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🧭 كيف تعمل المنظومة؟</div>
-          <p style="font-size:13.5px; color:var(--muted); margin-bottom:10px;">
-            يركز مشروع <strong style="color:var(--gold-bright)">Space X</strong> على تطوير وتشغيل أدوات الذكاء الاصطناعي، مجلات الأتمتة، والبرمجيات التطبيقية مع عرض مؤشرات النشاط والتقدم بشكل تفاعلي للأعضاء.
-          </p>
-          <div class="chips">
-            <span class="chip" onclick="switchTab('lab', document.querySelector('[data-tab=lab]'))">جرّب أدوات AI الآن ←</span>
-            <span class="chip" onclick="switchTab('offers', document.querySelector('[data-tab=offers]'))">استعرض العروض والحاسبة ←</span>
-            <span class="chip" onclick="switchTab('proofs', document.querySelector('[data-tab=proofs]'))">شاهد سجل الإثباتات ←</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- تبويب 2: مختبر أدوات الذكاء الاصطناعي -->
-    <section id="view-lab" class="view">
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title">💬 محاكي بوت الأتمتة وخدمة العملاء</div>
-          <div class="chips">
-            <span class="chip" onclick="askBot('ما هي مجالات عمل Space X؟')">مجالات العمل</span>
-            <span class="chip" onclick="askBot('كيف تعمل أدوات الأتمتة؟')">أدوات الأتمتة</span>
-            <span class="chip" onclick="askBot('كيف نتابع التحديثات؟')">متابعة التحديثات</span>
-          </div>
-          <div class="chat-box" id="chatBox">
-            <div class="msg bot">أهلاً بك في مختبر <strong>Space X</strong> التفاعلي! اسألني عن أدوات الأتمتة، المحتوى، البرمجيات، أو تحليل البيانات.</div>
-          </div>
-          <div style="display:flex; gap:8px;">
-            <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا..." style="margin-bottom:0;" onkeydown="if(event.key==='Enter') sendCustomChat()" />
-            <button class="btn-gold" onclick="sendCustomChat()">إرسال</button>
+          <div class="metric-row">
+            <div class="metric-top"><span>دقة التحليل التنبؤي</span><span style="color:var(--cyan)">91%</span></div>
+            <div class="bar-bg"><div class="bar-fg" style="width:91%; background:var(--cyan)"></div></div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-title">✍️ مولّد المحتوى والإعلانات الذكي</div>
-          <label>اسم المشروع أو المنتج</label>
-          <input type="text" id="genTopic" value="Space X — أدوات الأتمتة والبرمجيات" />
-          <label>نوع المحتوى</label>
-          <select id="genType">
-            <option value="promo">إعلان ترويجي قصير</option>
-            <option value="explain">شرح مبسط للأعضاء</option>
-          </select>
-          <button class="btn-gold" onclick="generateCopy()" style="margin-bottom:10px;">توليد النص</button>
-          <div class="output-box" id="genOutput">اضغط "توليد النص" لإنشاء صيغة جاهزة للنسخ والمشاركة.</div>
+        <div class="box canvas-wrap">
+          <canvas id="neuralSphere" width="460" height="360"></canvas>
+        </div>
+
+        <div class="box">
+          <div class="box-head"><span>رادار الإشارات والأسهم</span><span>SIGNALS</span></div>
+          <div id="signalsList"></div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">📊 محاكي تحليل البيانات وتوقع الطلب</div>
-        <label>مؤشر الطلب الأسبوعي على الأدوات والبرمجيات: <strong id="demandVal" style="color:var(--gold-bright)">75%</strong></label>
-        <input type="range" min="20" max="100" value="75" id="demandSlider" oninput="updateForecast(this.value)" />
-        <div class="output-box" id="forecastBox" style="min-height:auto;">
-          عند مؤشر طلب 75%: وتيرة تشغيل جيدة ومستقرة مع أولوية لأتمتة خدمة العملاء وتطوير البرمجيات الجاهزة.
+      <!-- الجزء السفلي: مخطط أعمدة + سجل تداول وأحداث -->
+      <div class="hud-grid-3">
+        <div class="box">
+          <div class="box-head"><span>مخطط الحجم والنشاط</span><span>VOLUME</span></div>
+          <canvas id="volChart" width="360" height="120"></canvas>
+        </div>
+
+        <div class="box" style="grid-column: span 2;">
+          <div class="box-head"><span>سجل الإشارات والحركة اللحظية</span><span>TAPE LOG</span></div>
+          <div class="log-feed" id="tapeLog"></div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- تبويب 3: العروض والحاسبة -->
-    <section id="view-offers" class="view">
-      <div class="card">
-        <div class="card-title">💎 باقات وعروض Space X (بالدينار الجزائري DA)</div>
-        <div class="packages-grid" id="packagesContainer"></div>
+    <!-- واجهة باقات الدينار الجزائري -->
+    <div class="view" id="v-offers">
+      <div class="box">
+        <div class="box-head"><span>💎 عروض وباقات SPACE X (DA)</span><span>CALC</span></div>
+        <div class="pkg-grid" id="pkgGrid"></div>
+        <div id="pkgSummary" style="padding:10px; background:var(--panel-2); border-radius:8px; color:var(--gold-b); font-weight:700;"></div>
+        <p style="color:var(--muted); font-size:11px; margin-top:8px;">
+          تنويه: أرقام تقديرية تنظيمية؛ ترتبط النتائج الفعلية بالنشاط الفعلي وتنطوي المشاريع على مخاطر وتغيرات.
+        </p>
+      </div>
+    </div>
 
-        <div class="output-box" id="calcBox" style="min-height:auto; margin-bottom:12px;">
-          اختر باقة من الأعلى لعرض تفاصيل المدة، القيمة اليومية التقديرية، والإجمالي المتوقع.
-        </div>
-
-        <div class="disclaimer">
-          <strong>تنويه شفافية ومخاطر:</strong> الأرقام والخطط المعروضة لأغراض التنظيم والمتابعة التقديرية؛ ترتبط النتائج الفعلية بحجم النشاط والطلب الفعلي على المنتجات والخدمات الرقمية، وتنطوي المشاريع الاستثمارية دائماً على احتمالات تغيّر ومخاطر يجب أخذها بعين الاعتبار.
+    <!-- واجهة مختبر الذكاء الاصطناعي -->
+    <div class="view" id="v-lab">
+      <div class="box">
+        <div class="box-head"><span>🤖 مساعد SPACE X الذكي</span><span>AI LAB</span></div>
+        <input type="text" id="aiPrompt" placeholder="اسأل عن مجالات Space X، الأتمتة، البرمجيات، أو قراءة المؤشرات..." />
+        <button class="btn-gold" onclick="runAiLab()">تحليل وتوليد رد</button>
+        <div id="aiReply" style="margin-top:10px; padding:10px; background:var(--panel-2); border-radius:8px; color:var(--cyan);">
+          جاهز للإجابة عن استفساراتك حول منظومة Space X.
         </div>
       </div>
-    </section>
-
-    <!-- تبويب 4: سجل الإثباتات -->
-    <section id="view-proofs" class="view">
-      <div class="card">
-        <div class="card-title">✅ سجل توثيق الأعمال والإثباتات</div>
-        <div class="chips" id="filterChips">
-          <span class="chip" onclick="renderProofs('الكل')">الكل</span>
-          <span class="chip" onclick="renderProofs('أتمتة')">أتمتة</span>
-          <span class="chip" onclick="renderProofs('برمجيات')">برمجيات</span>
-          <span class="chip" onclick="renderProofs('محتوى')">محتوى</span>
-          <span class="chip" onclick="renderProofs('تحليل')">تحليل</span>
-        </div>
-        <div id="proofsList"></div>
-      </div>
-    </section>
-
-    <footer>Space X — منصة تفاعلية للأعضاء</footer>
+    </div>
   </div>
 
   <script>
-    const ADMIN_PASS = "SpaceX@2026";
-    let isAdminUnlocked = false;
-    let logoClicks = 0;
+    const ADMIN_SECRET = "SpaceX@2026";
+    let adminOpen = false;
+    let taps = 0;
 
-    const offers = [
-      { id: 1, capital: 3000, total: 6300, daily: 900, days: 7 },
-      { id: 2, capital: 5000, total: 10500, daily: 1500, days: 7 },
-      { id: 3, capital: 7000, total: 14000, daily: 2000, days: 7 },
-      { id: 4, capital: 10000, total: 20300, daily: 2900, days: 7 },
-      { id: 5, capital: 20000, total: 40600, daily: 5800, days: 7 },
-      { id: 6, capital: 40000, total: 96000, daily: 12000, days: 8 }
+    const assets = [
+      { sym: "AI-CORE", name: "مؤشر الذكاء والأتمتة", price: 1842.5, chg: 2.84, type: "buy", score: 94, lat: 0.45, lon: -1.1 },
+      { sym: "NV-QUANT", name: "سلة الحوسبة والرقائق", price: 1420.1, chg: 3.12, type: "buy", score: 89, lat: 0.62, lon: 0.3 },
+      { sym: "SOFT-X", name: "مؤشر البرمجيات والتطبيقات", price: 964.2, chg: 1.42, type: "watch", score: 76, lat: 0.28, lon: 0.9 },
+      { sym: "DATA-IDX", name: "مؤشر البيانات والسيولة", price: 518.9, chg: -1.35, type: "sell", score: 38, lat: -0.2, lon: 1.5 },
+      { sym: "MKT-VOL", name: "مؤشر التذبذب والمخاطر", price: 312.4, chg: -2.18, type: "sell", score: 29, lat: 0.15, lon: -0.35 }
     ];
 
-    const proofs = [
-      { title: "تجهيز وإطلاق حزم أدوات الأتمتة", category: "أتمتة", date: "23/11/2026", detail: "توثيق تشغيل سيناريوهات الرد الآلي وتنظيم المهام المتكررة (56 وحدة مسجلة)." },
-      { title: "إصدار وتحديث أدوات برمجية تطبيقية", category: "برمجيات", date: "22/11/2026", detail: "توثيق نشر وتخصيص أدوات رقمية تطبيقية للمشاريع (44 وحدة مسجلة)." },
-      { title: "إنتاج قوالب محتوى وهويات بصرية بالذكاء الاصطناعي", category: "محتوى", date: "21/11/2026", detail: "تجهيز نماذج إعلانية ومحتوى مرئي موجه للمنصات الرقمية." },
-      { title: "مؤشرات تحليل البيانات وقراءة الطلب", category: "تحليل", date: "20/11/2026", detail: "مراجعة بيانات الطلب وتوزيع الأولويات الأسبوعية للمشروع." }
-    ];
-
-    /* بيانات محاكاة الأسواق والعقد الذكية للكرة الأرضية */
-    const marketAssets = [
-      { sym: "AI-CORE", name: "مؤشر الذكاء والأتمتة", price: 1842.50, change: 2.84, region: "أمريكا الشمالية", lat: 0.45, lon: -1.1 },
-      { sym: "SOFT-X", name: "سلة البرمجيات والتطوير", price: 964.20, change: 1.42, region: "أوروبا", lat: 0.65, lon: 0.25 },
-      { sym: "DATA-IDX", name: "مؤشر البيانات والتحليل", price: 518.90, change: -0.95, region: "الشرق الأوسط وشمال إفريقيا", lat: 0.35, lon: 0.65 },
-      { sym: "AUTO-NET", name: "شبكة الحوسبة والروبوتات", price: 1290.15, change: -1.18, region: "آسيا والمحيط الهادئ", lat: 0.22, lon: 1.65 }
-    ];
-
-    function renderTickers() {
-      const grid = document.getElementById("tickerGrid");
-      if (!grid) return;
-      grid.innerHTML = "";
-      marketAssets.forEach(a => {
-        const up = a.change >= 0;
-        const div = document.createElement("div");
-        div.className = "tick-item";
-        div.innerHTML = `
-          <div class="tick-sym">${a.sym} • ${a.region}</div>
-          <div class="tick-price">${a.price.toFixed(2)}</div>
-          <div class="${up ? "tick-up" : "tick-down"}">${up ? "▲ +" : "▼ "}${a.change.toFixed(2)}%</div>
-        `;
-        grid.appendChild(div);
-      });
-    }
-
-    function pulseMarkets() {
-      marketAssets.forEach(a => {
-        const delta = (Math.random() - 0.46) * 2.4;
-        a.change = Number(delta.toFixed(2));
-        a.price = Math.max(50, Number((a.price * (1 + delta / 100)).toFixed(2)));
-      });
-      renderTickers();
-    }
-
-    /* رسم الكرة الأرضية التفاعلية */
-    const globeCanvas = document.getElementById("aiGlobe");
-    const gCtx = globeCanvas ? globeCanvas.getContext("2d") : null;
-    let globeRot = 0.4;
-
-    function project3D(lat, lon, radius, cx, cy, rot) {
-      const cosLat = Math.cos(lat);
-      const x = radius * cosLat * Math.sin(lon + rot);
-      const y = -radius * Math.sin(lat);
-      const z = radius * cosLat * Math.cos(lon + rot);
-      return { x: cx + x, y: cy + y, z };
-    }
-
-    function drawGlobe() {
-      if (!gCtx || !globeCanvas) return;
-      const w = globeCanvas.width;
-      const h = globeCanvas.height;
-      const cx = w / 2;
-      const cy = h / 2;
-      const r = Math.min(w, h) * 0.39;
-
-      gCtx.clearRect(0, 0, w, h);
-
-      // هالة خارجية
-      const glow = gCtx.createRadialGradient(cx, cy, r * 0.7, cx, cy, r * 1.25);
-      glow.addColorStop(0, "rgba(56, 189, 248, 0.16)");
-      glow.addColorStop(1, "rgba(8, 10, 15, 0)");
-      gCtx.fillStyle = glow;
-      gCtx.beginPath();
-      gCtx.arc(cx, cy, r * 1.25, 0, Math.PI * 2);
-      gCtx.fill();
-
-      // جسم الكرة
-      const sphereGrad = gCtx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.1, cx, cy, r);
-      sphereGrad.addColorStop(0, "#1c2a44");
-      sphereGrad.addColorStop(0.65, "#0e1524");
-      sphereGrad.addColorStop(1, "#070a10");
-      gCtx.fillStyle = sphereGrad;
-      gCtx.beginPath();
-      gCtx.arc(cx, cy, r, 0, Math.PI * 2);
-      gCtx.fill();
-
-      gCtx.strokeStyle = "rgba(224, 179, 65, 0.35)";
-      gCtx.lineWidth = 1.5;
-      gCtx.stroke();
-
-      // خطوط العرض والطول الشبكية
-      gCtx.lineWidth = 0.8;
-      for (let i = -2; i <= 2; i++) {
-        const lat = (i * Math.PI) / 6;
-        gCtx.strokeStyle = "rgba(56, 189, 248, 0.16)";
-        gCtx.beginPath();
-        for (let step = 0; step <= 48; step++) {
-          const lon = (step / 48) * Math.PI * 2;
-          const p = project3D(lat, lon, r, cx, cy, globeRot);
-          if (p.z >= 0) {
-            if (step === 0) gCtx.moveTo(p.x, p.y);
-            else gCtx.lineTo(p.x, p.y);
-          }
-        }
-        gCtx.stroke();
-      }
-
-      for (let j = 0; j < 6; j++) {
-        const baseLon = (j * Math.PI) / 3;
-        gCtx.strokeStyle = "rgba(224, 179, 65, 0.14)";
-        gCtx.beginPath();
-        let started = false;
-        for (let step = -24; step <= 24; step++) {
-          const lat = (step / 24) * (Math.PI / 2);
-          const p = project3D(lat, baseLon, r, cx, cy, globeRot);
-          if (p.z >= 0) {
-            if (!started) { gCtx.moveTo(p.x, p.y); started = true; }
-            else gCtx.lineTo(p.x, p.y);
-          } else {
-            started = false;
-          }
-        }
-        gCtx.stroke();
-      }
-
-      // عقد الأسواق والذكاء الاصطناعي (خضراء للصعود وحمراء للهبوط)
-      const visibleNodes = [];
-      marketAssets.forEach(asset => {
-        const p = project3D(asset.lat, asset.lon, r, cx, cy, globeRot);
-        if (p.z > -10) {
-          const isUp = asset.change >= 0;
-          const color = isUp ? "#22c55e" : "#ef4444";
-          gCtx.fillStyle = color;
-          gCtx.beginPath();
-          gCtx.arc(p.x, p.y, 5.5, 0, Math.PI * 2);
-          gCtx.fill();
-
-          gCtx.strokeStyle = isUp ? "rgba(34, 197, 94, 0.45)" : "rgba(239, 68, 68, 0.45)";
-          gCtx.lineWidth = 2;
-          gCtx.beginPath();
-          gCtx.arc(p.x, p.y, 9.5, 0, Math.PI * 2);
-          gCtx.stroke();
-
-          visibleNodes.push({ asset, x: p.x, y: p.y });
-        }
-      });
-
-      // ربط العقد الظاهرة بخطوط بيانات
-      if (visibleNodes.length > 1) {
-        gCtx.strokeStyle = "rgba(247, 220, 132, 0.35)";
-        gCtx.lineWidth = 1.1;
-        gCtx.beginPath();
-        visibleNodes.forEach((n, idx) => {
-          if (idx === 0) gCtx.moveTo(n.x, n.y);
-          else gCtx.lineTo(n.x, n.y);
-        });
-        gCtx.stroke();
-      }
-
-      globeRot += 0.008;
-      requestAnimationFrame(drawGlobe);
-    }
-
-    if (globeCanvas) {
-      globeCanvas.addEventListener("click", () => {
-        const pick = marketAssets[Math.floor(Math.random() * marketAssets.length)];
-        const up = pick.change >= 0;
-        document.getElementById("globeSelectedInfo").innerHTML =
-          `<strong style="color:var(--gold-bright)">${pick.sym}</strong> (${pick.region}) — ${pick.name}: ` +
-          `<strong>${pick.price.toFixed(2)}</strong> ` +
-          `<span style="color:${up ? "var(--green)" : "var(--red)"}; font-weight:700;">(${up ? "▲ +" : "▼ "}${pick.change.toFixed(2)}%)</span>`;
-      });
-    }
-
-    function promptAdminAccess() {
-      if (isAdminUnlocked) {
-        document.getElementById('adminBox').classList.add('open');
-        return;
-      }
-      const entered = window.prompt("أدخل كلمة سر الإدارة الخاصة بـ Space X:");
-      if (entered === null) return;
-      if (entered === ADMIN_PASS) {
-        isAdminUnlocked = true;
-        document.getElementById('adminBox').classList.add('open');
-      } else {
-        alert("كلمة السر غير صحيحة.");
-      }
-    }
-
-    function lockAdmin() {
-      isAdminUnlocked = false;
-      document.getElementById('adminBox').classList.remove('open');
-    }
-
-    document.getElementById('logoTrigger').addEventListener('click', () => {
-      logoClicks++;
-      if (logoClicks >= 5) {
-        logoClicks = 0;
-        promptAdminAccess();
-      }
-    });
-
-    function checkHashAdmin() {
-      if (window.location.hash === "#admin") {
-        promptAdminAccess();
-      }
-    }
-    window.addEventListener("hashchange", checkHashAdmin);
-
-    function switchTab(tabName, btnEl) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById('view-' + tabName).classList.add('active');
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-tab'));
-      if (btnEl) btnEl.classList.add('active-tab');
-    }
-
-    function applyAdminStats() {
-      if (!isAdminUnlocked) return;
-      const profit = Number(document.getElementById('admProfit').value || 0);
-      const auto = Number(document.getElementById('admAuto').value || 0);
-      const soft = Number(document.getElementById('admSoft').value || 0);
-      const date = document.getElementById('admDate').value || '23/11/2026';
-
-      document.getElementById('kpiProfit').textContent = '$' + profit;
-      document.getElementById('kpiAuto').textContent = auto;
-      document.getElementById('kpiSoft').textContent = soft;
-      document.getElementById('kpiDate').textContent = date;
-
-      const totalUnits = Math.max(auto + soft, 1);
-      const autoShare = Math.round((auto / totalUnits) * 74);
-      const softShare = Math.max(74 - autoShare, 10);
-
-      document.getElementById('p1').textContent = autoShare + '%';
-      document.getElementById('b1').style.width = autoShare + '%';
-      document.getElementById('p2').textContent = softShare + '%';
-      document.getElementById('b2').style.width = softShare + '%';
-
-      document.getElementById('adminBox').classList.remove('open');
-    }
-
-    function askBot(question) {
-      const box = document.getElementById('chatBox');
-      const uMsg = document.createElement('div');
-      uMsg.className = 'msg user';
-      uMsg.textContent = question;
-      box.appendChild(uMsg);
-
-      let reply = "نعمل في Space X على تطوير أدوات الأتمتة، صناعة المحتوى، تحليل البيانات، والبرمجيات التطبيقية مع متابعة مستمرة للأرقام والإثباتات.";
-      if (question.includes("أتمتة")) {
-        reply = "أدوات الأتمتة تساعد على أتمتة الردود والمهام المتكررة وتنظيم سير العمل بكفاءة أعلى.";
-      } else if (question.includes("تحديثات")) {
-        reply = "يمكنك متابعة الأرقام وسجل الإثباتات مباشرة من تبويبي (نظرة عامة) و(سجل الإثباتات).";
-      }
-
-      const bMsg = document.createElement('div');
-      bMsg.className = 'msg bot';
-      bMsg.textContent = reply;
-      box.appendChild(bMsg);
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function sendCustomChat() {
-      const inp = document.getElementById('chatInput');
-      const val = inp.value.trim();
-      if (!val) return;
-      askBot(val);
-      inp.value = '';
-    }
-
-    function generateCopy() {
-      const topic = document.getElementById('genTopic').value.trim() || "Space X";
-      const type = document.getElementById('genType').value;
-      const out = document.getElementById('genOutput');
-
-      if (type === 'promo') {
-        out.textContent = `🚀 ${topic}\nحلول ذكية، أدوات أتمتة، وبرمجيات عملية مع لوحة متابعة واضحة ومباشرة للأعضاء.\nاستكشف التفاصيل والأقسام التفاعلية داخل المنصة الآن.`;
-      } else {
-        out.textContent = `📌 نبذة عن ${topic}:\nنركز على بناء وتشغيل أدوات الأتمتة، المحتوى الرقمي، تحليل البيانات، والبرمجيات التطبيقية وتوثيق خطوات التنفيذ بشكل منظم وشفاف.`;
-      }
-    }
-
-    function updateForecast(val) {
-      document.getElementById('demandVal').textContent = val + '%';
-      let msg = "وتيرة معتدلة: تركيز على تحسين جودة الأدوات والبرمجيات الجاهزة.";
-      if (val >= 75) msg = "وتيرة مرتفعة: طلب قوي يدعم توسيع حزم الأتمتة والبرمجيات التطبيقية.";
-      else if (val < 45) msg = "وتيرة حذرة: أولوية للمراجعة والتحسين وتقليل التكاليف التشغيلية.";
-      document.getElementById('forecastBox').textContent = `عند مؤشر طلب ${val}%: ${msg}`;
-    }
-
-    function renderPackages() {
-      const container = document.getElementById('packagesContainer');
-      container.innerHTML = '';
-      offers.forEach((o, idx) => {
-        const div = document.createElement('div');
-        div.className = 'pkg' + (idx === 0 ? ' selected' : '');
-        div.innerHTML = `
-          <div class="pkg-amount">${o.capital.toLocaleString()} DA</div>
-          <div class="pkg-meta">المدة: ${o.days} أيام • يومي تقديري: ${o.daily.toLocaleString()} DA</div>
-          <div class="pkg-meta">الإجمالي التقديري: <strong>${o.total.toLocaleString()} DA</strong></div>
-        `;
-        div.onclick = () => {
-          document.querySelectorAll('.pkg').forEach(el => el.classList.remove('selected'));
-          div.classList.add('selected');
-          document.getElementById('calcBox').innerHTML =
-            `الباقة المختارة: <strong>${o.capital.toLocaleString()} DA</strong> لمدة <strong>${o.days} أيام</strong> — القيمة اليومية التقديرية: <strong>${o.daily.toLocaleString()} DA</strong> — الإجمالي التقديري: <strong>${o.total.toLocaleString()} DA</strong>.`;
-        };
-        container.appendChild(div);
-      });
-      document.getElementById('calcBox').innerHTML =
-        `الباقة المختارة: <strong>3,000 DA</strong> لمدة <strong>7 أيام</strong> — القيمة اليومية التقديرية: <strong>900 DA</strong> — الإجمالي التقديري: <strong>6,300 DA</strong>.`;
-    }
-
-    function renderProofs(filter) {
-      const list = document.getElementById('proofsList');
-      list.innerHTML = '';
-      const filtered = filter === 'الكل' ? proofs : proofs.filter(p => p.category === filter);
-      filtered.forEach(p => {
-        const item = document.createElement('div');
-        item.className = 'proof-item';
-        item.innerHTML = `
-          <div>
-            <div style="font-weight:700; font-size:14px;">${p.title}</div>
-            <div style="font-size:12.5px; color:var(--muted); margin-top:3px;">${p.detail}</div>
-          </div>
-          <div style="text-align:left;">
-            <span class="badge">${p.category}</span>
-            <div style="font-size:11.5px; color:var(--muted); margin-top:4px;">${p.date}</div>
-          </div>
-        `;
-        list.appendChild(item);
-      });
-    }
-
-    renderTickers();
-    drawGlobe();
-    renderPackages();
-    renderProofs('الكل');
-    checkHashAdmin();
-  </script>
-</body>
-</html>
+    const
