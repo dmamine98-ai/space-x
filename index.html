@@ -61,12 +61,12 @@
       color: #080a0f; display: grid; place-items: center;
       font-size: 25px; font-weight: 900;
       box-shadow: 0 6px 20px rgba(224, 179, 65, 0.28);
+      cursor: pointer;
+      user-select: none;
     }
 
     .brand h1 { font-size: 22px; color: var(--gold-bright); letter-spacing: 0.4px; }
     .brand p { font-size: 12.5px; color: var(--muted); }
-
-    .mode-switch { display: flex; gap: 8px; flex-wrap: wrap; }
 
     button {
       border: none; border-radius: 11px; padding: 9px 14px;
@@ -204,14 +204,11 @@
     <header>
       <div class="header-top">
         <div class="brand">
-          <div class="brand-icon">🚀</div>
+          <div class="brand-icon" id="logoTrigger" title="Space X">🚀</div>
           <div>
             <h1>Space X</h1>
             <p>منصة الذكاء الاصطناعي، الأتمتة وحلول المشاريع التفاعلية</p>
           </div>
-        </div>
-        <div class="mode-switch">
-          <button class="btn-ghost" onclick="toggleAdmin()">⚙️ وضع الإدارة</button>
         </div>
       </div>
 
@@ -223,9 +220,9 @@
       </nav>
     </header>
 
-    <!-- لوحة الإدارة -->
+    <!-- لوحة الإدارة الخاصة بك فقط (محمية بكلمة سر) -->
     <section id="adminBox" class="card admin-box">
-      <div class="card-title">⚙️ لوحة تحديث البيانات (Space X)</div>
+      <div class="card-title">🔐 لوحة الإدارة الخاصة (Space X)</div>
       <div class="grid-2">
         <div>
           <label>أرباح هذا الأسبوع ($)</label>
@@ -244,7 +241,10 @@
           <input type="text" id="admDate" value="22/11/2026" />
         </div>
       </div>
-      <button class="btn-gold" onclick="applyAdminStats()">حفظ وتحديث الأرقام</button>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-gold" onclick="applyAdminStats()">حفظ وتحديث الأرقام</button>
+        <button class="btn-ghost" onclick="lockAdmin()">إغلاق لوحة الإدارة</button>
+      </div>
     </section>
 
     <!-- تبويب 1: نظرة عامة -->
@@ -376,10 +376,14 @@
       </div>
     </section>
 
-    <footer>Space X — واجهة تفاعلية للأعضاء والإدارة</footer>
+    <footer>Space X — منصة تفاعلية للأعضاء</footer>
   </div>
 
   <script>
+    const ADMIN_PASS = "SpaceX@2026";
+    let isAdminUnlocked = false;
+    let logoClicks = 0;
+
     const offers = [
       { id: 1, capital: 3000, total: 6300, daily: 900, days: 7 },
       { id: 2, capital: 5000, total: 10500, daily: 1500, days: 7 },
@@ -396,6 +400,41 @@
       { title: "مؤشرات تحليل البيانات وقراءة الطلب", category: "تحليل", date: "20/11/2026", detail: "مراجعة بيانات الطلب وتوزيع الأولويات الأسبوعية للمشروع." }
     ];
 
+    function promptAdminAccess() {
+      if (isAdminUnlocked) {
+        document.getElementById('adminBox').classList.add('open');
+        return;
+      }
+      const entered = window.prompt("أدخل كلمة سر الإدارة الخاصة بـ Space X:");
+      if (entered === null) return;
+      if (entered === ADMIN_PASS) {
+        isAdminUnlocked = true;
+        document.getElementById('adminBox').classList.add('open');
+      } else {
+        alert("كلمة السر غير صحيحة.");
+      }
+    }
+
+    function lockAdmin() {
+      isAdminUnlocked = false;
+      document.getElementById('adminBox').classList.remove('open');
+    }
+
+    document.getElementById('logoTrigger').addEventListener('click', () => {
+      logoClicks++;
+      if (logoClicks >= 5) {
+        logoClicks = 0;
+        promptAdminAccess();
+      }
+    });
+
+    function checkHashAdmin() {
+      if (window.location.hash === "#admin") {
+        promptAdminAccess();
+      }
+    }
+    window.addEventListener("hashchange", checkHashAdmin);
+
     function switchTab(tabName, btnEl) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById('view-' + tabName).classList.add('active');
@@ -403,11 +442,8 @@
       if (btnEl) btnEl.classList.add('active-tab');
     }
 
-    function toggleAdmin() {
-      document.getElementById('adminBox').classList.toggle('open');
-    }
-
     function applyAdminStats() {
+      if (!isAdminUnlocked) return;
       const profit = Number(document.getElementById('admProfit').value || 0);
       const auto = Number(document.getElementById('admAuto').value || 0);
       const soft = Number(document.getElementById('admSoft').value || 0);
@@ -525,6 +561,7 @@
 
     renderPackages();
     renderProofs('الكل');
+    checkHashAdmin();
   </script>
 </body>
 </html>
