@@ -274,7 +274,7 @@
     <div class="top-bar">
       <div class="brand-box" id="brandTrigger" title="Space X">
         <span class="brand-badge">SX</span>
-        <span class="brand-title">SPACE X // NEURAL & MARKET ENGINE</span>
+        <span class="brand-title">Space X // NEURAL & MARKET ENGINE</span>
         <span class="live-pill">● LIVE MATRIX</span>
       </div>
       <div class="stream-line" id="topStream">
@@ -289,7 +289,7 @@
 
     <div class="box admin-box" id="adminPanel">
       <div class="box-head">
-        <span>🔐 لوحة الإدارة الخاصة — SPACE X</span>
+        <span>🔐 لوحة الإدارة الخاصة — Space X</span>
         <button class="btn-dark" onclick="closeAdmin()">إغلاق</button>
       </div>
       <div class="hud-grid-3">
@@ -306,7 +306,7 @@
           <input type="number" id="inSoft" value="44" />
         </div>
       </div>
-      <button class="btn-gold" onclick="saveAdmin()">تحديث مؤشرات المنصة</button>
+      <button class="btn-gold" onclick="saveAdmin()">تحديث مؤشرات Space X</button>
     </div>
 
     <div class="view active" id="v-terminal">
@@ -336,7 +336,7 @@
 
         <div class="box">
           <div class="box-head">
-            <span>حالة الشبكة والبيانات</span>
+            <span>حالة شبكة Space X</span>
             <span style="color:var(--gold-b)">AI-V4</span>
           </div>
           <div style="font-size:12px; margin-bottom:4px;">العقدة النشطة: <strong style="color:var(--cyan)" id="activeNodeLabel">AI-CORE • مؤشر الذكاء والأتمتة</strong></div>
@@ -391,7 +391,7 @@
 
     <div class="view" id="v-offers">
       <div class="box">
-        <div class="box-head"><span>💎 عروض وباقات SPACE X (DA)</span><span>CALC</span></div>
+        <div class="box-head"><span>💎 عروض وباقات Space X (DA)</span><span>CALC</span></div>
         <div class="pkg-grid" id="pkgGrid"></div>
         <div id="pkgSummary" style="padding:10px; background:var(--panel-2); border-radius:8px; color:var(--gold-b); font-weight:700;"></div>
         <p style="color:var(--muted); font-size:11px; margin-top:8px;">
@@ -402,7 +402,7 @@
 
     <div class="view" id="v-lab">
       <div class="box">
-        <div class="box-head"><span>🤖 مساعد SPACE X الذكي</span><span>AI LAB</span></div>
+        <div class="box-head"><span>🤖 مساعد Space X الذكي</span><span>AI LAB</span></div>
         <input type="text" id="aiPrompt" placeholder="اسأل عن مجالات Space X، الأتمتة، البرمجيات، أو قراءة المؤشرات..." />
         <button class="btn-gold" onclick="runAiLab()">تحليل وتوليد رد</button>
         <div id="aiReply" style="margin-top:10px; padding:10px; background:var(--panel-2); border-radius:8px; color:var(--cyan);">
@@ -452,7 +452,7 @@
             document.getElementById("adminPanel").classList.add("open");
             return;
           }
-          const pass = window.prompt("أدخل كلمة سر الإدارة الخاصة:");
+          const pass = window.prompt("أدخل كلمة سر الإدارة الخاصة بـ Space X:");
           if (pass === ADMIN_SECRET) {
             adminOpen = true;
             document.getElementById("adminPanel").classList.add("open");
@@ -476,7 +476,7 @@
       document.getElementById("statAuto").textContent = a;
       document.getElementById("statSoft").textContent = s;
       closeAdmin();
-      pushLog("ADMIN", "تم تحديث أرقام المنصة ($" + p + " / أتمتة: " + a + " / برمجيات: " + s + ")", true);
+      pushLog("ADMIN", "تم تحديث أرقام Space X ($" + p + " / أتمتة: " + a + " / برمجيات: " + s + ")", true);
     }
 
     function pushLog(tag, text, up) {
@@ -527,7 +527,7 @@
       const ts = document.getElementById("topStream");
       if (bc) bc.textContent = "صاعد: " + upCnt;
       if (src) src.textContent = "هابط: " + dnCnt;
-      if (ts) ts.textContent = parts.join(" | ") + " | SPACE X LIVE";
+      if (ts) ts.textContent = parts.join(" | ") + " | Space X LIVE";
     }
 
     function tickMarket() {
@@ -554,7 +554,6 @@
       const cx = w / 2, cy = h / 2, r = 92;
       nCtx.clearRect(0, 0, w, h);
 
-      // حلقات مدارية حول النواة
       nCtx.strokeStyle = "rgba(34, 211, 238, 0.22)";
       nCtx.lineWidth = 1;
       nCtx.beginPath();
@@ -693,7 +692,7 @@
         out.textContent = "اكتب سؤالاً أو كلمة مفتاحية أولاً.";
         return;
       }
-      out.textContent = `[SPACE X AI] تحليل حول "${q}": المنظومة تربط بين أدوات الأتمتة، البرمجيات التطبيقية، وقراءة المؤشرات اللحظية ضمن واجهة واحدة شفافة وسريعة.`;
+      out.textContent = `[Space X AI] تحليل حول "${q}": المنظومة تربط بين أدوات الأتمتة، البرمجيات التطبيقية، وقراءة المؤشرات اللحظية ضمن واجهة واحدة شفافة وسريعة.`;
     }
 
     renderSignalsAndStream();
