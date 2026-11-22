@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space X — منصة الذكاء الاصطناعي والاستثمار التعاوني</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --card: #131722;
+      --card-2: #191f2e;
+      --gold: #d4af37;
+      --text: #f5f7fa;
+      --muted: #9aa4b2;
+      --border: rgba(212, 175, 55, 0.24);
+      --green: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.6; padding: 16px; }
+    .container { max-width: 960px; margin: 0 auto; }
+    header {
+      background: linear-gradient(135deg, #141926, #0e121b);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .top-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, #f3d267, #b88b1e);
+      color: #0b0d12; display: grid; place-items: center; font-size: 24px; font-weight: 800;
+    }
+    h1 { font-size: 22px; color: var(--gold); }
+    .subtitle { color: var(--muted); font-size: 13px; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      border: none; border-radius: 10px; padding: 10px 14px; font-weight: 700; cursor: pointer; font-size: 13px;
+    }
+    .btn-gold { background: linear-gradient(135deg, #f3d267, #c59724); color: #0b0d12; }
+    .btn-dark { background: var(--card-2); color: var(--text); border: 1px solid var(--border); }
+    .grid-kpis {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 18px;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px;
+    }
+    .kpi-label { color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .kpi-val { font-size: 26px; font-weight: 800; color: var(--gold); }
+    .kpi-sub { font-size: 12px; color: var(--green); margin-top: 4px; }
+    .section-title { font-size: 17px; color: var(--gold); margin-bottom: 12px; }
+    .tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .track-box { background: var(--card-2); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 12px; }
+    .track-box h3 { font-size: 14px; color: #fff; margin-bottom: 4px; }
+    .track-box p { font-size: 12.5px; color: var(--muted); }
+    .admin-panel { display: none; background: #171c2b; border: 1px solid var(--gold); }
+    .admin-panel.active { display: block; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 12px; }
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    input {
+      width: 100%; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--border);
+      background: #0d1018; color: var(--text); font-size: 14px;
+    }
+    .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="top-row">
+        <div class="brand">
+          <div class="logo">🚀</div>
+          <div>
+            <h1>Space X</h1>
+            <div class="subtitle">منصة الذكاء الاصطناعي، الأتمتة والاستثمار التعاوني</div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-gold" onclick="setMode('member')">عرض الأعضاء</button>
+          <button class="btn-dark" onclick="setMode('admin')">وضع الإدارة</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="adminPanel" class="card admin-panel">
+      <div class="section-title">⚙️ تحديث الأرقام المباشرة (Space X)</div>
+      <div class="form-grid">
+        <div>
+          <label>أرباح هذا الأسبوع ($)</label>
+          <input type="number" id="inProfit" value="120" />
+        </div>
+        <div>
+          <label>حزم الأتمتة المباعة</label>
+          <input type="number" id="inAuto" value="56" />
+        </div>
+        <div>
+          <label>البرمجيات المباعة</label>
+          <input type="number" id="inSoft" value="44" />
+        </div>
+        <div>
+          <label>تاريخ آخر تحديث</label>
+          <input type="text" id="inDate" value="22/11/2026" />
+        </div>
+      </div>
+      <button class="btn-gold" onclick="saveStats()">حفظ وتحديث اللوحة</button>
+      <div class="note">آخر تحديث مسجل: <span id="lastUpdate">22/11/2026</span></div>
+    </div>
+
+    <div class="grid-kpis">
+      <div class="card" style="margin-bottom:0">
+        <div class="kpi-label">أرباح هذا الأسبوع</div>
+        <div class="kpi-val" id="outProfit">$120</div>
+        <div class="kpi-sub">● نشط وموثّق</div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="kpi-label">مجلات / حزم الأتمتة المباعة</div>
+        <div class="kpi-val" id="outAuto">56</div>
+        <div class="kpi-sub">أدوات وروبوتات ذكية</div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="kpi-label">البرمجيات المباعة</div>
+        <div class="kpi-val" id="outSoft">44</div>
+        <div class="kpi-sub">تطبيقات وأدوات رقمية</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">💡 مجالات عمل واستثمار Space X في الذكاء الاصطناعي</div>
+      <div class="tracks">
+        <div class="track-box">
+          <h3>أدوات الأتمتة وخدمة العملاء</h3>
+          <p>أنظمة ورد تلقائي ومتابعة للعملاء لتقليل الجهد وتسريع الخدمات.</p>
+        </div>
+        <div class="track-box">
+          <h3>صناعة المحتوى والتصميم</h3>
+          <p>إنتاج تصاميم ومحتوى رقمي حديث يدعم المشاريع والعلامات التجارية.</p>
+        </div>
+        <div class="track-box">
+          <h3>تحليل البيانات والتنبؤ</h3>
+          <p>قراءة البيانات والمؤشرات لمساعدة المشاريع على قرارات أدق.</p>
+        </div>
+        <div class="track-box">
+          <h3>الحوسبة والبرمجيات التطبيقية</h3>
+          <p>بناء أدوات وتطبيقات عملية تخدم احتياجات واقعية.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setMode(mode) {
+      const panel = document.getElementById('adminPanel');
+      if (mode === 'admin') panel.classList.add('active');
+      else panel.classList.remove('active');
+    }
+    function saveStats() {
+      const profit = document.getElementById('inProfit').value || 0;
+      const auto = document.getElementById('inAuto').value || 0;
+      const soft = document.getElementById('inSoft').value || 0;
+      const date = document.getElementById('inDate').value || '';
+      document.getElementById('outProfit').textContent = '$' + profit;
+      document.getElementById('outAuto').textContent = auto;
+      document.getElementById('outSoft').textContent = soft;
+      document.getElementById('lastUpdate').textContent = date;
+      setMode('member');
+    }
+  </script>
+</body>
+</html>
