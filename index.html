@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Space X — منصة الذكاء الاصطناعي والأدوات التفاعلية</title>
+  <title>Space X — منصة الذكاء الاصطناعي والأسواق التفاعلية</title>
   <style>
     :root {
       --bg: #080a0f;
@@ -17,6 +17,7 @@
       --border: rgba(224, 179, 65, 0.25);
       --accent: #38bdf8;
       --green: #22c55e;
+      --red: #ef4444;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
@@ -113,8 +114,64 @@
 
     .card-title {
       font-size: 17px; color: var(--gold-bright);
-      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+      margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
     }
+
+    /* الكرة الأرضية والمؤشرات */
+    .globe-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 16px;
+      align-items: center;
+    }
+
+    .globe-wrap {
+      position: relative;
+      background: radial-gradient(circle at center, rgba(56, 189, 248, 0.12), rgba(8, 10, 15, 0.96) 72%);
+      border: 1px solid rgba(56, 189, 248, 0.24);
+      border-radius: 18px;
+      padding: 10px;
+      display: grid;
+      place-items: center;
+    }
+
+    canvas#aiGlobe {
+      width: 100%;
+      max-width: 340px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      display: block;
+      cursor: pointer;
+    }
+
+    .globe-hud {
+      margin-top: 8px;
+      width: 100%;
+      background: #0b0e16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+    }
+
+    .ticker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .tick-item {
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 13px;
+      padding: 11px 12px;
+    }
+
+    .tick-sym { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .tick-price { font-size: 17px; font-weight: 900; margin: 2px 0; color: var(--text); }
+    .tick-up { color: var(--green); font-size: 12px; font-weight: 700; }
+    .tick-down { color: var(--red); font-size: 12px; font-weight: 700; }
 
     .kpis {
       display: grid;
@@ -207,7 +264,7 @@
           <div class="brand-icon" id="logoTrigger" title="Space X">🚀</div>
           <div>
             <h1>Space X</h1>
-            <p>منصة الذكاء الاصطناعي، الأتمتة وحلول المشاريع التفاعلية</p>
+            <p>منصة الذكاء الاصطناعي، الأتمتة والأسواق التفاعلية</p>
           </div>
         </div>
       </div>
@@ -238,7 +295,7 @@
         </div>
         <div>
           <label>تاريخ التحديث</label>
-          <input type="text" id="admDate" value="22/11/2026" />
+          <input type="text" id="admDate" value="23/11/2026" />
         </div>
       </div>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -249,11 +306,35 @@
 
     <!-- تبويب 1: نظرة عامة -->
     <section id="view-overview" class="view active">
+      <!-- الكرة الأرضية الذكية + مؤشرات الأسواق -->
+      <div class="card">
+        <div class="card-title">
+          <span>🌐 شبكة الذكاء الاصطناعي العالمية ومؤشرات الأسواق</span>
+          <button class="btn-ghost" onclick="pulseMarkets()">🔄 نبض السوق الآن</button>
+        </div>
+
+        <div class="globe-layout">
+          <div class="globe-wrap">
+            <canvas id="aiGlobe" width="340" height="340" aria-label="كرة أرضية تفاعلية للذكاء الاصطناعي والأسواق"></canvas>
+            <div class="globe-hud" id="globeSelectedInfo">
+              اضغط على الكرة الأرضية أو اختر عقدة لمعاينة إشارة الذكاء الاصطناعي وحركة المؤشر.
+            </div>
+          </div>
+
+          <div>
+            <div class="ticker-grid" id="tickerGrid"></div>
+            <div class="disclaimer">
+              <strong>ملاحظة:</strong> مؤشرات الأسعار والنبضات الخضراء/الحمراء في هذا العرض محاكاة تفاعلية توضيحية لبيئة الذكاء الاصطناعي والأسواق، وليست توصية مالية أو استثمارية.
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="kpis">
         <div class="kpi">
           <div class="label">أرباح هذا الأسبوع</div>
           <div class="val" id="kpiProfit">$120</div>
-          <div class="tag">● نشط وموثّق — آخر تحديث: <span id="kpiDate">22/11/2026</span></div>
+          <div class="tag">● نشط وموثّق — آخر تحديث: <span id="kpiDate">23/11/2026</span></div>
         </div>
         <div class="kpi">
           <div class="label">مجلات الأتمتة المباعة</div>
@@ -394,11 +475,175 @@
     ];
 
     const proofs = [
-      { title: "تجهيز وإطلاق حزم أدوات الأتمتة", category: "أتمتة", date: "22/11/2026", detail: "توثيق تشغيل سيناريوهات الرد الآلي وتنظيم المهام المتكررة (56 وحدة مسجلة)." },
+      { title: "تجهيز وإطلاق حزم أدوات الأتمتة", category: "أتمتة", date: "23/11/2026", detail: "توثيق تشغيل سيناريوهات الرد الآلي وتنظيم المهام المتكررة (56 وحدة مسجلة)." },
       { title: "إصدار وتحديث أدوات برمجية تطبيقية", category: "برمجيات", date: "22/11/2026", detail: "توثيق نشر وتخصيص أدوات رقمية تطبيقية للمشاريع (44 وحدة مسجلة)." },
       { title: "إنتاج قوالب محتوى وهويات بصرية بالذكاء الاصطناعي", category: "محتوى", date: "21/11/2026", detail: "تجهيز نماذج إعلانية ومحتوى مرئي موجه للمنصات الرقمية." },
       { title: "مؤشرات تحليل البيانات وقراءة الطلب", category: "تحليل", date: "20/11/2026", detail: "مراجعة بيانات الطلب وتوزيع الأولويات الأسبوعية للمشروع." }
     ];
+
+    /* بيانات محاكاة الأسواق والعقد الذكية للكرة الأرضية */
+    const marketAssets = [
+      { sym: "AI-CORE", name: "مؤشر الذكاء والأتمتة", price: 1842.50, change: 2.84, region: "أمريكا الشمالية", lat: 0.45, lon: -1.1 },
+      { sym: "SOFT-X", name: "سلة البرمجيات والتطوير", price: 964.20, change: 1.42, region: "أوروبا", lat: 0.65, lon: 0.25 },
+      { sym: "DATA-IDX", name: "مؤشر البيانات والتحليل", price: 518.90, change: -0.95, region: "الشرق الأوسط وشمال إفريقيا", lat: 0.35, lon: 0.65 },
+      { sym: "AUTO-NET", name: "شبكة الحوسبة والروبوتات", price: 1290.15, change: -1.18, region: "آسيا والمحيط الهادئ", lat: 0.22, lon: 1.65 }
+    ];
+
+    function renderTickers() {
+      const grid = document.getElementById("tickerGrid");
+      if (!grid) return;
+      grid.innerHTML = "";
+      marketAssets.forEach(a => {
+        const up = a.change >= 0;
+        const div = document.createElement("div");
+        div.className = "tick-item";
+        div.innerHTML = `
+          <div class="tick-sym">${a.sym} • ${a.region}</div>
+          <div class="tick-price">${a.price.toFixed(2)}</div>
+          <div class="${up ? "tick-up" : "tick-down"}">${up ? "▲ +" : "▼ "}${a.change.toFixed(2)}%</div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    function pulseMarkets() {
+      marketAssets.forEach(a => {
+        const delta = (Math.random() - 0.46) * 2.4;
+        a.change = Number(delta.toFixed(2));
+        a.price = Math.max(50, Number((a.price * (1 + delta / 100)).toFixed(2)));
+      });
+      renderTickers();
+    }
+
+    /* رسم الكرة الأرضية التفاعلية */
+    const globeCanvas = document.getElementById("aiGlobe");
+    const gCtx = globeCanvas ? globeCanvas.getContext("2d") : null;
+    let globeRot = 0.4;
+
+    function project3D(lat, lon, radius, cx, cy, rot) {
+      const cosLat = Math.cos(lat);
+      const x = radius * cosLat * Math.sin(lon + rot);
+      const y = -radius * Math.sin(lat);
+      const z = radius * cosLat * Math.cos(lon + rot);
+      return { x: cx + x, y: cy + y, z };
+    }
+
+    function drawGlobe() {
+      if (!gCtx || !globeCanvas) return;
+      const w = globeCanvas.width;
+      const h = globeCanvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const r = Math.min(w, h) * 0.39;
+
+      gCtx.clearRect(0, 0, w, h);
+
+      // هالة خارجية
+      const glow = gCtx.createRadialGradient(cx, cy, r * 0.7, cx, cy, r * 1.25);
+      glow.addColorStop(0, "rgba(56, 189, 248, 0.16)");
+      glow.addColorStop(1, "rgba(8, 10, 15, 0)");
+      gCtx.fillStyle = glow;
+      gCtx.beginPath();
+      gCtx.arc(cx, cy, r * 1.25, 0, Math.PI * 2);
+      gCtx.fill();
+
+      // جسم الكرة
+      const sphereGrad = gCtx.createRadialGradient(cx - r * 0.35, cy - r * 0.35, r * 0.1, cx, cy, r);
+      sphereGrad.addColorStop(0, "#1c2a44");
+      sphereGrad.addColorStop(0.65, "#0e1524");
+      sphereGrad.addColorStop(1, "#070a10");
+      gCtx.fillStyle = sphereGrad;
+      gCtx.beginPath();
+      gCtx.arc(cx, cy, r, 0, Math.PI * 2);
+      gCtx.fill();
+
+      gCtx.strokeStyle = "rgba(224, 179, 65, 0.35)";
+      gCtx.lineWidth = 1.5;
+      gCtx.stroke();
+
+      // خطوط العرض والطول الشبكية
+      gCtx.lineWidth = 0.8;
+      for (let i = -2; i <= 2; i++) {
+        const lat = (i * Math.PI) / 6;
+        gCtx.strokeStyle = "rgba(56, 189, 248, 0.16)";
+        gCtx.beginPath();
+        for (let step = 0; step <= 48; step++) {
+          const lon = (step / 48) * Math.PI * 2;
+          const p = project3D(lat, lon, r, cx, cy, globeRot);
+          if (p.z >= 0) {
+            if (step === 0) gCtx.moveTo(p.x, p.y);
+            else gCtx.lineTo(p.x, p.y);
+          }
+        }
+        gCtx.stroke();
+      }
+
+      for (let j = 0; j < 6; j++) {
+        const baseLon = (j * Math.PI) / 3;
+        gCtx.strokeStyle = "rgba(224, 179, 65, 0.14)";
+        gCtx.beginPath();
+        let started = false;
+        for (let step = -24; step <= 24; step++) {
+          const lat = (step / 24) * (Math.PI / 2);
+          const p = project3D(lat, baseLon, r, cx, cy, globeRot);
+          if (p.z >= 0) {
+            if (!started) { gCtx.moveTo(p.x, p.y); started = true; }
+            else gCtx.lineTo(p.x, p.y);
+          } else {
+            started = false;
+          }
+        }
+        gCtx.stroke();
+      }
+
+      // عقد الأسواق والذكاء الاصطناعي (خضراء للصعود وحمراء للهبوط)
+      const visibleNodes = [];
+      marketAssets.forEach(asset => {
+        const p = project3D(asset.lat, asset.lon, r, cx, cy, globeRot);
+        if (p.z > -10) {
+          const isUp = asset.change >= 0;
+          const color = isUp ? "#22c55e" : "#ef4444";
+          gCtx.fillStyle = color;
+          gCtx.beginPath();
+          gCtx.arc(p.x, p.y, 5.5, 0, Math.PI * 2);
+          gCtx.fill();
+
+          gCtx.strokeStyle = isUp ? "rgba(34, 197, 94, 0.45)" : "rgba(239, 68, 68, 0.45)";
+          gCtx.lineWidth = 2;
+          gCtx.beginPath();
+          gCtx.arc(p.x, p.y, 9.5, 0, Math.PI * 2);
+          gCtx.stroke();
+
+          visibleNodes.push({ asset, x: p.x, y: p.y });
+        }
+      });
+
+      // ربط العقد الظاهرة بخطوط بيانات
+      if (visibleNodes.length > 1) {
+        gCtx.strokeStyle = "rgba(247, 220, 132, 0.35)";
+        gCtx.lineWidth = 1.1;
+        gCtx.beginPath();
+        visibleNodes.forEach((n, idx) => {
+          if (idx === 0) gCtx.moveTo(n.x, n.y);
+          else gCtx.lineTo(n.x, n.y);
+        });
+        gCtx.stroke();
+      }
+
+      globeRot += 0.008;
+      requestAnimationFrame(drawGlobe);
+    }
+
+    if (globeCanvas) {
+      globeCanvas.addEventListener("click", () => {
+        const pick = marketAssets[Math.floor(Math.random() * marketAssets.length)];
+        const up = pick.change >= 0;
+        document.getElementById("globeSelectedInfo").innerHTML =
+          `<strong style="color:var(--gold-bright)">${pick.sym}</strong> (${pick.region}) — ${pick.name}: ` +
+          `<strong>${pick.price.toFixed(2)}</strong> ` +
+          `<span style="color:${up ? "var(--green)" : "var(--red)"}; font-weight:700;">(${up ? "▲ +" : "▼ "}${pick.change.toFixed(2)}%)</span>`;
+      });
+    }
 
     function promptAdminAccess() {
       if (isAdminUnlocked) {
@@ -447,7 +692,7 @@
       const profit = Number(document.getElementById('admProfit').value || 0);
       const auto = Number(document.getElementById('admAuto').value || 0);
       const soft = Number(document.getElementById('admSoft').value || 0);
-      const date = document.getElementById('admDate').value || '22/11/2026';
+      const date = document.getElementById('admDate').value || '23/11/2026';
 
       document.getElementById('kpiProfit').textContent = '$' + profit;
       document.getElementById('kpiAuto').textContent = auto;
@@ -559,6 +804,8 @@
       });
     }
 
+    renderTickers();
+    drawGlobe();
     renderPackages();
     renderProofs('الكل');
     checkHashAdmin();
