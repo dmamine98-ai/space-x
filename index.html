@@ -34,6 +34,142 @@
 
     .term { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
 
+    /* بوابة التسجيل السريع عبر تيليغرام */
+    .gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 6, 14, 0.94);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .gate-overlay.hidden { display: none; }
+    .gate-card {
+      width: 100%;
+      max-width: 420px;
+      background: linear-gradient(160deg, #0e1628, #070b16);
+      border: 1px solid rgba(34, 211, 238, 0.45);
+      box-shadow: 0 0 40px rgba(34, 211, 238, 0.15);
+      border-radius: 16px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    .gate-logo {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold-b), var(--gold));
+      color: #050811;
+      font-weight: 900;
+      font-size: 18px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .gate-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+    .gate-sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .gate-label {
+      display: block;
+      text-align: right;
+      font-size: 11.5px;
+      color: var(--gold-b);
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    /* شريط وكيلة الذكاء الاصطناعي الصوتي والموجات الموسيقية */
+    .ai-voice-hud {
+      background: linear-gradient(90deg, rgba(16, 23, 41, 0.96), rgba(11, 16, 29, 0.96));
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .ai-voice-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ai-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--cyan), #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #050811;
+      font-size: 13px;
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.5);
+    }
+    .eq-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 24px;
+      padding: 2px 6px;
+      background: rgba(5, 8, 17, 0.7);
+      border-radius: 6px;
+      border: 1px solid rgba(34, 211, 238, 0.2);
+    }
+    .eq-bars span {
+      width: 3.5px;
+      height: 5px;
+      border-radius: 99px;
+      background: linear-gradient(to top, var(--cyan), var(--gold-b));
+      transition: height 0.12s ease;
+    }
+    .eq-bars.speaking span {
+      animation: eqDance 0.55s infinite ease-in-out alternate;
+    }
+    .eq-bars.speaking span:nth-child(2) { animation-delay: 0.1s; }
+    .eq-bars.speaking span:nth-child(3) { animation-delay: 0.22s; }
+    .eq-bars.speaking span:nth-child(4) { animation-delay: 0.05s; }
+    .eq-bars.speaking span:nth-child(5) { animation-delay: 0.3s; }
+    .eq-bars.speaking span:nth-child(6) { animation-delay: 0.15s; }
+    .eq-bars.speaking span:nth-child(7) { animation-delay: 0.25s; }
+    .eq-bars.speaking span:nth-child(8) { animation-delay: 0.08s; }
+    .eq-bars.speaking span:nth-child(9) { animation-delay: 0.18s; }
+
+    @keyframes eqDance {
+      0% { height: 4px; opacity: 0.55; }
+      50% { height: 20px; opacity: 1; }
+      100% { height: 8px; opacity: 0.8; }
+    }
+
+    .voice-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .member-tag {
+      background: rgba(234, 179, 8, 0.14);
+      border: 1px solid rgba(234, 179, 8, 0.4);
+      color: var(--gold-b);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
     .top-bar {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -228,9 +364,9 @@
       color: #050811;
       border: none;
       border-radius: 7px;
-      padding: 6px 11px;
+      padding: 7px 13px;
       font-weight: 800;
-      font-size: 11.5px;
+      font-size: 12px;
       cursor: pointer;
     }
     .btn-dark {
@@ -250,9 +386,9 @@
       color: var(--text);
       border: 1px solid var(--line);
       border-radius: 7px;
-      padding: 8px 10px;
-      margin-bottom: 8px;
-      font-size: 12px;
+      padding: 9px 11px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
     }
 
     .admin-box { display: none; border-color: var(--gold); }
@@ -267,10 +403,91 @@
       cursor: pointer;
     }
     .pkg.active { border-color: var(--gold-b); background: rgba(234, 179, 8, 0.08); }
+
+    /* نظام تقييم 5 نجوم */
+    .rating-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: linear-gradient(135deg, rgba(16, 23, 41, 0.95), rgba(11, 16, 29, 0.95));
+      border: 1px solid rgba(234, 179, 8, 0.35);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .stars-row {
+      display: flex;
+      gap: 6px;
+      direction: ltr;
+    }
+    .star-btn {
+      background: var(--panel-2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #475569;
+      font-size: 22px;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .star-btn.lit {
+      color: var(--gold-b);
+      border-color: var(--gold);
+      background: rgba(234, 179, 8, 0.14);
+      transform: scale(1.06);
+    }
   </style>
 </head>
 <body>
+
+  <!-- بوابة تسجيل العضو عبر تيليغرام -->
+  <div class="gate-overlay" id="telegramGate">
+    <div class="gate-card">
+      <div class="gate-logo">SPACE X</div>
+      <div class="gate-title">بوابة الدخول الذكية للأعضاء</div>
+      <div class="gate-sub">
+        سجّل اسمك ومعرّف تيليغرام للدخول إلى منظومة <strong>Space X</strong> والاستماع إلى الترحيب الصوتي المباشر من وكيلة الذكاء الاصطناعي.
+      </div>
+      <label class="gate-label">الاسم على تيليغرام</label>
+      <input type="text" id="tgNameInput" placeholder="مثال: أمين / سارة..." />
+
+      <label class="gate-label">معرّف تيليغرام (@username)</label>
+      <input type="text" id="tgUserInput" placeholder="مثال: @username" />
+
+      <button class="btn-gold" style="width:100%; padding:10px; font-size:13px;" onclick="enterSpaceX()">
+        🚀 دخول وتفعيل المساعد الصوتي
+      </button>
+      <div id="gateErr" style="color:#f87171; font-size:11px; margin-top:8px;"></div>
+    </div>
+  </div>
+
   <div class="term">
+    <!-- شريط وكيلة الذكاء الاصطناعي والموجات الموسيقية -->
+    <div class="ai-voice-hud">
+      <div class="ai-voice-info">
+        <div class="ai-avatar">AI</div>
+        <div>
+          <div style="font-weight:800; color:var(--cyan); font-size:12px;" id="aiVoiceTitle">
+            وكيلة Space X الذكية • جاهزة للتحدث
+          </div>
+          <div style="color:var(--muted); font-size:10.5px;" id="aiVoiceStatus">
+            نظام التوجيه الصوتي التفاعلي نشط
+          </div>
+        </div>
+        <div class="eq-bars" id="eqBars" title="مؤشر الموجات الصوتية للذكاء الاصطناعي">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="voice-controls">
+        <span class="member-tag" id="memberBadge">العضو: زائر Space X</span>
+        <button class="btn-dark" onclick="replayVoice()">🔊 إعادة التشغيل</button>
+        <button class="btn-dark" id="muteToggleBtn" onclick="toggleMuteVoice()">🔇 كتم الصوت</button>
+      </div>
+    </div>
+
     <div class="top-bar">
       <div class="brand-box" id="brandTrigger" title="Space X">
         <span class="brand-badge">SX</span>
@@ -316,8 +533,8 @@
             <span>أرباح الأسبوع الموثقة</span>
             <span class="up">▲ ACTIVE</span>
           </div>
-          <div class="gold-num" id="statProfit">$120</div>
-          <div style="color:var(--muted); font-size:11px;">أتمتة: <strong id="statAuto" style="color:var(--cyan)">56</strong> • برمجيات: <strong id="statSoft" style="color:var(--gold-b)">44</strong></div>
+          <div class="gold-num" id="statProfit">$140</div>
+          <div style="color:var(--muted); font-size:11px;">أتمتة: <strong id="statAuto" style="color:var(--cyan)">65</strong> • برمجيات: <strong id="statSoft" style="color:var(--gold-b)">51</strong></div>
           <div class="mini-bars" id="sparkBars"></div>
         </div>
 
@@ -387,6 +604,23 @@
           <div class="log-feed" id="tapeLog"></div>
         </div>
       </div>
+
+      <!-- قسم تقييم شركة Space X بـ 5 نجوم -->
+      <div class="rating-box">
+        <div>
+          <div style="font-weight:900; color:var(--gold-b); font-size:13px;">⭐ قيّم تجربتك مع شركة Space X (5 نجوم)</div>
+          <div style="color:var(--muted); font-size:11px; margin-top:3px;" id="ratingStatusText">
+            التقييم العام للمنصة: <strong style="color:var(--green)">4.9 / 5</strong> • اضغط على النجوم لإرسال تقييمك
+          </div>
+        </div>
+        <div class="stars-row" id="starsRow">
+          <button class="star-btn lit" onclick="rateCompany(1)">★</button>
+          <button class="star-btn lit" onclick="rateCompany(2)">★</button>
+          <button class="star-btn lit" onclick="rateCompany(3)">★</button>
+          <button class="star-btn lit" onclick="rateCompany(4)">★</button>
+          <button class="star-btn lit" onclick="rateCompany(5)">★</button>
+        </div>
+      </div>
     </div>
 
     <div class="view" id="v-offers">
@@ -416,6 +650,159 @@
     const ADMIN_SECRET = "SpaceX@2026";
     let adminOpen = false;
     let taps = 0;
+    let isMuted = false;
+    let memberData = { name: "", username: "" };
+
+    function buildWelcomeSpeech(name) {
+      const cleanName = name || "صديقنا العزيز";
+      return `أهلاً بك يا ${cleanName} في منظومة سبيس إكس للذكاء الاصطناعي والأسواق الرقمية. ` +
+        `يسعدني مرافقتك اليوم داخل هذه المنصة التي صُممت لتمنحك رؤية واضحة وشفافة خطوة بخطوة. ` +
+        `هنا يمكنك متابعة نبض السوق والرادار العصبي لحظة بلحظة، والاطلاع على مبيعات سبيس إكس، والأرباح الأسبوعية الموثقة، بالإضافة إلى استكشاف الباقات والخدمات والتحديثات الجديدة فور إطلاقها. ` +
+        `وقبل أن تبدأ جولتك، لا تنسَ إضافة أصدقائك وبعض الأعضاء الجدد إلى مجموعة سبيس إكس على تيليغرام، والمشاركة والتفاعل فيها ليعمّ النجاح للجميع. شكراً لانضمامك، ونتمنى لك تجربة موفقة ومثمرة.`;
+    }
+
+    function setSpeakingVisual(active, statusMsg) {
+      const eq = document.getElementById("eqBars");
+      const st = document.getElementById("aiVoiceStatus");
+      if (eq) {
+        if (active) eq.classList.add("speaking");
+        else eq.classList.remove("speaking");
+      }
+      if (st && statusMsg) st.textContent = statusMsg;
+    }
+
+    function pickFemaleArabicVoice() {
+      if (!("speechSynthesis" in window)) return null;
+      const voices = window.speechSynthesis.getVoices() || [];
+      const arVoices = voices.filter(v => (v.lang || "").toLowerCase().includes("ar"));
+      const femaleHint = arVoices.find(v =>
+        /female|woman|zira|salma|laila|mariam|amira|hana|fatima|sara|google/i.test(v.name)
+      );
+      return femaleHint || arVoices[0] || null;
+    }
+
+    function speakWelcome(name) {
+      if (isMuted) {
+        setSpeakingVisual(false, "الصوت مكتوم حالياً — اضغط إعادة التشغيل للاستماع");
+        return;
+      }
+      if (!("speechSynthesis" in window)) {
+        setSpeakingVisual(false, "تم الترحيب بالعضو بنجاح");
+        return;
+      }
+
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(buildWelcomeSpeech(name));
+        utter.lang = "ar-SA";
+        utter.rate = 0.96;
+        utter.pitch = 1.14; // نبرة أنثوية ناعمة وواضحة
+        const chosen = pickFemaleArabicVoice();
+        if (chosen) utter.voice = chosen;
+
+        utter.onstart = () => setSpeakingVisual(true, "وكيلة Space X تتحدث إليك الآن...");
+        utter.onend = () => setSpeakingVisual(false, "انتهت الرسالة الصوتية — اضغط إعادة التشغيل للسماع مجدداً");
+        utter.onerror = () => setSpeakingVisual(false, "تم تفعيل المنصة — اضغط إعادة التشغيل للصوت");
+
+        setSpeakingVisual(true, "وكيلة Space X تتحدث إليك الآن...");
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        setSpeakingVisual(false, "جاهز للتشغيل");
+      }
+    }
+
+    function replayVoice() {
+      isMuted = false;
+      const btn = document.getElementById("muteToggleBtn");
+      if (btn) btn.textContent = "🔇 كتم الصوت";
+      speakWelcome(memberData.name);
+    }
+
+    function toggleMuteVoice() {
+      const btn = document.getElementById("muteToggleBtn");
+      if (!isMuted) {
+        isMuted = true;
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+        setSpeakingVisual(false, "تم كتم صوت وكيلة الذكاء الاصطناعي");
+        if (btn) btn.textContent = "🔊 تشغيل الصوت";
+      } else {
+        replayVoice();
+      }
+    }
+
+    function applyMemberUI(name, username) {
+      memberData = { name, username };
+      const badge = document.getElementById("memberBadge");
+      const title = document.getElementById("aiVoiceTitle");
+      if (badge) badge.textContent = `${name} (${username})`;
+      if (title) title.textContent = `وكيلة Space X الذكية • مرحباً يا ${name}`;
+    }
+
+    function enterSpaceX() {
+      const nameVal = (document.getElementById("tgNameInput").value || "").trim();
+      let userVal = (document.getElementById("tgUserInput").value || "").trim();
+      const err = document.getElementById("gateErr");
+
+      if (!nameVal || !userVal) {
+        err.textContent = "يرجى إدخال اسمك ومعرّف تيليغرام للمتابعة.";
+        return;
+      }
+      if (!userVal.startsWith("@")) userVal = "@" + userVal;
+      err.textContent = "";
+
+      try {
+        localStorage.setItem("spacex_member_v1", JSON.stringify({ name: nameVal, username: userVal }));
+      } catch (e) {}
+
+      document.getElementById("telegramGate").classList.add("hidden");
+      applyMemberUI(nameVal, userVal);
+      pushLog("MEMBER", `انضم العضو ${nameVal} (${userVal}) إلى منظومة Space X`, true);
+      speakWelcome(nameVal);
+    }
+
+    function initMemberGate() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("spacex_member_v1") || "null");
+        if (saved && saved.name && saved.username) {
+          document.getElementById("telegramGate").classList.add("hidden");
+          applyMemberUI(saved.name, saved.username);
+          setSpeakingVisual(false, `مرحباً بعودتك يا ${saved.name} — اضغط إعادة التشغيل لسماع الترحيب`);
+        }
+      } catch (e) {}
+    }
+
+    function rateCompany(stars) {
+      const btns = document.querySelectorAll("#starsRow .star-btn");
+      btns.forEach((b, idx) => {
+        if (idx < stars) b.classList.add("lit");
+        else b.classList.remove("lit");
+      });
+      try {
+        localStorage.setItem("spacex_rating_v1", String(stars));
+      } catch (e) {}
+      const txt = document.getElementById("ratingStatusText");
+      if (txt) {
+        txt.innerHTML = `شكراً لتقييمك (${stars} من 5 نجوم) ⭐ • التقييم العام لشركة <strong>Space X</strong>: <strong style="color:var(--green)">4.9 / 5</strong>`;
+      }
+      pushLog("RATING", `تقييم جديد للمنصة: ${stars}/5 نجوم من ${memberData.name || "عضو Space X"}`, true);
+    }
+
+    function initSavedRating() {
+      try {
+        const r = Number(localStorage.getItem("spacex_rating_v1") || 0);
+        if (r >= 1 && r <= 5) {
+          const btns = document.querySelectorAll("#starsRow .star-btn");
+          btns.forEach((b, idx) => {
+            if (idx < r) b.classList.add("lit");
+            else b.classList.remove("lit");
+          });
+          const txt = document.getElementById("ratingStatusText");
+          if (txt) {
+            txt.innerHTML = `تقييمك المسجّل: (${r} من 5 نجوم) ⭐ • التقييم العام لشركة <strong>Space X</strong>: <strong style="color:var(--green)">4.9 / 5</strong>`;
+          }
+        }
+      } catch (e) {}
+    }
 
     const assets = [
       { sym: "AI-CORE", name: "مؤشر الذكاء والأتمتة", price: 1842.5, chg: 2.84, type: "buy", score: 94, lat: 0.45, lon: -1.1 },
@@ -453,7 +840,7 @@
             return;
           }
           const pass = window.prompt("أدخل كلمة سر الإدارة الخاصة بـ Space X:");
-          if (pass === ADMIN_SECRET) {
+          if (pass !== null && pass.trim().toLowerCase() === ADMIN_SECRET.toLowerCase()) {
             adminOpen = true;
             document.getElementById("adminPanel").classList.add("open");
           } else if (pass !== null) {
@@ -695,6 +1082,12 @@
       out.textContent = `[Space X AI] تحليل حول "${q}": المنظومة تربط بين أدوات الأتمتة، البرمجيات التطبيقية، وقراءة المؤشرات اللحظية ضمن واجهة واحدة شفافة وسريعة.`;
     }
 
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = () => pickFemaleArabicVoice();
+    }
+
+    initMemberGate();
+    initSavedRating();
     renderSignalsAndStream();
     drawNeuralSphere();
     drawVolChart();
