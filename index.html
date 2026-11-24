@@ -34,6 +34,53 @@
 
     .term { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
 
+    /* بطاقة افتتاحية مركّزة بأسلوب واضح وحاسم مع لمسة مقام الشهيد */
+    .hero-focus {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(234, 179, 8, 0.35);
+      background:
+        linear-gradient(110deg, rgba(5, 8, 17, 0.92) 25%, rgba(11, 16, 29, 0.78) 65%, rgba(5, 8, 17, 0.94) 100%),
+        url("maqam-hero.jpg") center/cover no-repeat;
+      padding: 18px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .hero-copy { max-width: 720px; z-index: 1; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--gold-b);
+      background: rgba(234, 179, 8, 0.14);
+      border: 1px solid rgba(234, 179, 8, 0.38);
+      padding: 3px 9px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .hero-desc {
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      z-index: 1;
+    }
+
     /* بوابة التسجيل السريع عبر تيليغرام */
     .gate-overlay {
       position: fixed;
@@ -364,7 +411,7 @@
       color: #050811;
       border: none;
       border-radius: 7px;
-      padding: 7px 13px;
+      padding: 8px 14px;
       font-weight: 800;
       font-size: 12px;
       cursor: pointer;
@@ -374,9 +421,9 @@
       color: var(--text);
       border: 1px solid var(--line);
       border-radius: 7px;
-      padding: 5px 10px;
+      padding: 7px 12px;
       font-weight: 700;
-      font-size: 11px;
+      font-size: 11.5px;
       cursor: pointer;
     }
 
@@ -451,7 +498,7 @@
         سجّل اسمك ومعرّف تيليغرام للدخول إلى منظومة <strong>Space X</strong> والاستماع إلى الترحيب الصوتي المباشر من وكيلة الذكاء الاصطناعي.
       </div>
       <label class="gate-label">الاسم على تيليغرام</label>
-      <input type="text" id="tgNameInput" placeholder="مثال: جانا / فاطيمة..." />
+      <input type="text" id="tgNameInput" placeholder="مثال: جانا _ فاطيمة..." />
 
       <label class="gate-label">معرّف تيليغرام (@username)</label>
       <input type="text" id="tgUserInput" placeholder="مثال: @username" />
@@ -464,6 +511,21 @@
   </div>
 
   <div class="term">
+    <!-- بطاقة افتتاحية مركّزة بأسلوب واضح ومباشر -->
+    <div class="hero-focus">
+      <div class="hero-copy">
+        <span class="hero-tag">SPACE X • منظومة ذكاء اصطناعي، أتمتة، برمجيات وباقات منظمة</span>
+        <div class="hero-title">رؤية ذكية وواضحة للأسواق والباقات في منصة واحدة</div>
+        <div class="hero-desc">
+          نربط بين حلول الأتمتة والبرمجيات، متابعة الإشارات والرادار العصبي، والباقات التنظيمية بالدينار الجزائري (من 3,000 DA إلى 40,000 DA على مدد 7–8 أيام) بشفافية وتفاعل مباشر.
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-gold" onclick="jumpToOffers()">💎 استكشف باقات DA</button>
+        <button class="btn-dark" onclick="replayVoice()">🔊 تشغيل المساعد الصوتي</button>
+      </div>
+    </div>
+
     <!-- شريط وكيلة الذكاء الاصطناعي والموجات الموسيقية -->
     <div class="ai-voice-hud">
       <div class="ai-voice-info">
@@ -498,9 +560,9 @@
         [AI-CORE] +2.84% ▲ | [NV-QUANT] +3.12% ▲ | [SOFT-X] +1.42% ▲ | [DATA-IDX] -1.35% ▼ | [MKT-VOL] -2.18% ▼
       </div>
       <div class="nav-row">
-        <button class="nav-btn active" data-v="terminal" onclick="openV('terminal', this)">⚡ الرادار العصبي</button>
-        <button class="nav-btn" data-v="offers" onclick="openV('offers', this)">💎 باقات DA</button>
-        <button class="nav-btn" data-v="lab" onclick="openV('lab', this)">🤖 مختبر AI</button>
+        <button class="nav-btn active" id="nav-terminal" data-v="terminal" onclick="openV('terminal', this)">⚡ الرادار العصبي</button>
+        <button class="nav-btn" id="nav-offers" data-v="offers" onclick="openV('offers', this)">💎 باقات DA</button>
+        <button class="nav-btn" id="nav-lab" data-v="lab" onclick="openV('lab', this)">🤖 مختبر AI</button>
       </div>
     </div>
 
@@ -653,6 +715,10 @@
     let isMuted = false;
     let memberData = { name: "", username: "" };
 
+    function jumpToOffers() {
+      openV("offers", document.getElementById("nav-offers"));
+    }
+
     function buildWelcomeSpeech(name) {
       const cleanName = name || "صديقنا العزيز";
       return `أهلاً بك يا ${cleanName} في منظومة سبيس إكس للذكاء الاصطناعي والأسواق الرقمية. ` +
@@ -696,7 +762,7 @@
         const utter = new SpeechSynthesisUtterance(buildWelcomeSpeech(name));
         utter.lang = "ar-SA";
         utter.rate = 0.96;
-        utter.pitch = 1.14; // نبرة أنثوية ناعمة وواضحة
+        utter.pitch = 1.14;
         const chosen = pickFemaleArabicVoice();
         if (chosen) utter.voice = chosen;
 
